@@ -1,9 +1,11 @@
+import { Suspense } from 'react';
+import { useRoutes } from 'react-router-dom';
+import { routes } from './router';
+
 function App() {
-  return (
-    <div className='bg-red-400 text-white'>
-      <div>"This is our app"</div>
-    </div>
-  );
+  const appRoutes = useRoutes(routes);
+
+  return <Suspense fallback={<div className='flex h-screen items-center justify-center'>loading...</div>}>{appRoutes}</Suspense>;
 }
 
 export default App;
