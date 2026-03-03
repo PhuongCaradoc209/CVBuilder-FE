@@ -75,7 +75,7 @@ export default tseslint.config(
           semi: true,
           singleQuote: true,
           useTabs: false,
-          endOfLine: 'lf',
+          endOfLine: 'auto',
           printWidth: 130,
           bracketSameLine: true,
         },
