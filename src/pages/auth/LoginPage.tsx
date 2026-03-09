@@ -1,10 +1,16 @@
+import { Input } from '@/components/ui/input';
+
+import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
+import { EnvelopeIcon } from '@phosphor-icons/react';
+import GoogleIcon from '@/icon/googleIcon';
+
 function LoginPage() {
   return (
     <main className='flex h-screen w-full'>
       {/* LEFT - ORANGE */}
-      <section className='flex flex-1 flex-col items-center justify-center bg-gradient-to-br from-[#FF8C00] to-[#FF6A00] text-white'>
+      <section className='md:flex md:flex-1 flex-col items-center hidden md:block justify-center bg-gradient-to-br from-[#FF8C00] to-[#FF6A00] text-white'>
         {/* TOP */}
-        <div className='flex w-[360px] flex-col justify-center'>
+        <div className='flex w-90 flex-col justify-center'>
           {/* Logo */}
           <div className='mb-10 flex items-center gap-2 text-lg font-bold'>
             <div>Logo</div>
@@ -48,7 +54,7 @@ function LoginPage() {
             </div>
 
             {/* badge */}
-            <div className='absolute right-1 bottom-1 rounded-full bg-white/10 px-6 py-3 text-xs font-semibold text-white shadow-lg'>
+            <div className='absolute -right-10 -bottom-5 rotate-6 rounded-full bg-white/10 px-6 py-3 text-xs font-semibold text-white shadow-lg'>
               ATS Optimized
             </div>
           </div>
@@ -70,7 +76,10 @@ function LoginPage() {
 
           {/*Social Login*/}
           <div className='mb-6 flex gap-4'>
-            <button className='flex-1 rounded-full border border-gray-400 py-3 hover:bg-orange-400'>Google</button>
+            <div>
+              <GoogleIcon/>
+              <button className='flex-1 rounded-full border border-gray-400 py-3 hover:bg-orange-400'>Google</button>
+            </div>
             <button className='flex-1 rounded-full border border-gray-400 py-3 hover:bg-orange-400'>GitHub</button>
           </div>
 
@@ -91,7 +100,35 @@ function LoginPage() {
             />
           </div>
 
-          <div className='mb-4'>
+          <FieldSet className='w-full'>
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor='username'>Username</FieldLabel>
+                <div className='relative flex items-center'>
+                  <EnvelopeIcon className='text-gray-400 absolute left-4' weight='light' size={24} />
+                  <Input
+                    className='rounded-3xl px-12 py-5 outline-none focus:ring-1 focus:ring-orange-500'
+                    id='username'
+                    type='text'
+                    placeholder='Max Leiter'
+                  />
+                </div>
+                {/* <FieldDescription>Choose a unique username for your account.</FieldDescription> */}
+              </Field>
+              <Field>
+                <div className='flex justify-between'>
+                  <FieldLabel htmlFor='password'>Password</FieldLabel>
+                  <FieldLabel className='cursor-pointer font-semibold text-orange-500' htmlFor='f-password'>
+                    Forgot password?
+                  </FieldLabel>
+                </div>
+                {/* <FieldDescription>Must be at least 8 characters long.</FieldDescription> */}
+                <Input id='password' type='password' placeholder='••••••••' />
+              </Field>
+            </FieldGroup>
+          </FieldSet>
+
+          {/* <div className='mb-4'>
             <div className='flex justify-between text-sm'>
               <label className='text-sm font-medium'>Password</label>
               <span className='cursor-pointer font-semibold text-orange-500'>Forgot password?</span>
@@ -102,7 +139,7 @@ function LoginPage() {
               type='password'
               placeholder='•••••••••'
             />
-          </div>
+          </div> */}
 
           {/*Check box*/}
           <div className='mb-7 flex cursor-pointer items-center gap-2 text-sm font-semibold text-gray-500'>
@@ -114,15 +151,13 @@ function LoginPage() {
           </div>
 
           {/* Button */}
-          <button className='w-full rounded-full bg-orange-500 py-3 text-white font-semibold hover:bg-orange-500/80'>
-            Sign In to Dashboard</button>
+          <button className='w-full rounded-full bg-orange-500 py-3 font-semibold text-white hover:bg-orange-500/80'>
+            Sign In to Dashboard
+          </button>
 
           {/*Register*/}
-          <p className="mt-6 text-sm text-center font-medium text-gray-500">
-            New here? {" "}
-            <span className="text-orange-500 cursor-pointer">
-              Create your professional account
-            </span>
+          <p className='mt-6 text-center text-sm font-medium text-gray-500'>
+            New here? <span className='cursor-pointer text-orange-500'>Create your professional account</span>
           </p>
         </div>
       </section>
