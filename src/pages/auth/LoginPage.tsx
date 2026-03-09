@@ -1,14 +1,15 @@
 import { Input } from '@/components/ui/input';
 
-import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
+import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
 import { EnvelopeIcon } from '@phosphor-icons/react';
 import GoogleIcon from '@/icon/googleIcon';
+import InputField from '@/components/common/inputField';
 
 function LoginPage() {
   return (
     <main className='flex h-screen w-full'>
       {/* LEFT - ORANGE */}
-      <section className='md:flex md:flex-1 flex-col items-center hidden md:block justify-center bg-gradient-to-br from-[#FF8C00] to-[#FF6A00] text-white'>
+      <section className='hidden flex-col items-center justify-center bg-linear-to-br from-[#FF8C00] to-[#FF6A00] text-white md:block md:flex md:flex-1'>
         {/* TOP */}
         <div className='flex w-90 flex-col justify-center'>
           {/* Logo */}
@@ -66,7 +67,7 @@ function LoginPage() {
 
       {/* RIGHT WHITE */}
       <section className='flex flex-1 items-center justify-center bg-white'>
-        <div className='flex w-[450px] flex-col'>
+        <div className='flex w-112.5 flex-col'>
           <div className='mb-5'>
             {/* Title */}
             <h2 className='mb-2 text-3xl font-bold'>Welcome Back</h2>
@@ -77,7 +78,7 @@ function LoginPage() {
           {/*Social Login*/}
           <div className='mb-6 flex gap-4'>
             <div>
-              <GoogleIcon/>
+              <GoogleIcon />
               <button className='flex-1 rounded-full border border-gray-400 py-3 hover:bg-orange-400'>Google</button>
             </div>
             <button className='flex-1 rounded-full border border-gray-400 py-3 hover:bg-orange-400'>GitHub</button>
@@ -90,7 +91,7 @@ function LoginPage() {
           </div>
 
           {/* Form */}
-          <div className='mb-4'>
+          {/* <div className='mb-4'>
             <label className='text-sm font-medium'>Email Address</label>
 
             <input
@@ -98,14 +99,13 @@ function LoginPage() {
               type='email'
               placeholder='name@carrer.com'
             />
-          </div>
-
+          </div> */}
           <FieldSet className='w-full'>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor='username'>Username</FieldLabel>
                 <div className='relative flex items-center'>
-                  <EnvelopeIcon className='text-gray-400 absolute left-4' weight='light' size={24} />
+                  <EnvelopeIcon className='absolute left-4 text-gray-400' weight='light' size={24} />
                   <Input
                     className='rounded-3xl px-12 py-5 outline-none focus:ring-1 focus:ring-orange-500'
                     id='username'
