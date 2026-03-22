@@ -1,7 +1,8 @@
 import { Field, FieldLabel } from '../ui/field';
 import { Input } from '../ui/input';
 
-interface ifp {
+interface InputFieldProps {
+  id: string;
   label: string;
   subLabel?: string;
   icon: React.ReactNode;
@@ -9,11 +10,13 @@ interface ifp {
   typeInput: string;
 }
 
-const InputField = ({ label, subLabel, icon, placeholder, typeInput }: ifp) => {
+const InputField = ({ id, label, subLabel, icon, placeholder, typeInput }: InputFieldProps) => {
   return (
     <Field>
       <div className='flex justify-between'>
-        <FieldLabel htmlFor='password'>{label}</FieldLabel>
+        <FieldLabel className='text-black/85' htmlFor={id}>
+          {label}
+        </FieldLabel>
         <FieldLabel className='cursor-pointer font-semibold text-orange-500' htmlFor='f-password'>
           {subLabel}
         </FieldLabel>
@@ -21,6 +24,7 @@ const InputField = ({ label, subLabel, icon, placeholder, typeInput }: ifp) => {
       <div className='relative flex items-center'>
         {icon}
         <Input
+          id={id}
           className='rounded-3xl px-12 py-5 outline-none focus:ring-1 focus:ring-orange-500'
           type={typeInput}
           placeholder={placeholder}

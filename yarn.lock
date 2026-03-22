@@ -1644,6 +1644,11 @@
     "@tailwindcss/oxide" "4.2.1"
     tailwindcss "4.2.1"
 
+"@thesvg/react@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@thesvg/react/-/react-2.0.0.tgz#af48199e5bfd532a097ef2340abbb6552fba72b6"
+  integrity sha512-TrhzpvEMKKGp4VQQ6YG604nKo6eAoYW05FM0eVz2y7OCkAYUN5KyeGQ2GXtHVSwGMfOdYoBm+7ajGB723JtdhQ==
+
 "@ts-morph/common@~0.27.0":
   version "0.27.0"
   resolved "https://registry.yarnpkg.com/@ts-morph/common/-/common-0.27.0.tgz#e83a1bd7cbac054045c6246a7c4c99eab7692d46"
