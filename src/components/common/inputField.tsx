@@ -1,16 +1,15 @@
 import { Field, FieldLabel } from '../ui/field';
 import { Input } from '../ui/input';
 
-interface InputFieldProps {
+interface InputFieldProps extends React.ComponentProps<typeof Input> {
   id: string;
   label: string;
   subLabel?: string;
   icon: React.ReactNode;
-  placeholder?: string;
-  typeInput: string;
+  className?: string;
 }
 
-const InputField = ({ id, label, subLabel, icon, placeholder, typeInput }: InputFieldProps) => {
+const InputField = ({ id, label, subLabel, icon, className, ...props }: InputFieldProps) => {
   return (
     <Field>
       <div className='flex justify-between'>
@@ -26,8 +25,7 @@ const InputField = ({ id, label, subLabel, icon, placeholder, typeInput }: Input
         <Input
           id={id}
           className='rounded-3xl px-12 py-5 outline-none focus:ring-1 focus:ring-orange-500'
-          type={typeInput}
-          placeholder={placeholder}
+          {...props}
         />
       </div>
     </Field>

@@ -34,7 +34,7 @@ function LoginPage() {
 
         {/* CARD DEMO */}
         <div className='mt-10 -rotate-5'>
-          <div className='relative h-[220px] w-[350px] rounded-4xl bg-white/10 p-6 shadow-2xl backdrop-blur'>
+          <div className='relative px-55 py-87.5 rounded-4xl bg-white/10 p-6 shadow-2xl backdrop-blur'>
             <div className='mb-5 flex items-center gap-3'>
               <div className='h-14 w-14 rounded-full bg-white/30'></div>
               <div className='flex-1 space-y-2'>
@@ -80,11 +80,11 @@ function LoginPage() {
           {/*Social Login*/}
 
           <div className='mb-6 flex gap-4'>
-            <Button className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-orange-400'>
+            <Button className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-gray-400'>
               <GoogleIcon />
               <span className='text-base font-semibold text-gray-700'>Google</span>
             </Button>
-            <Button className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-orange-400'>
+            <Button className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-gray-400'>
               <GithubIcon />
               <span className='text-base font-semibold text-gray-700'>Github</span>
             </Button>
@@ -104,7 +104,7 @@ function LoginPage() {
                 subLabel=''
                 icon={<EnvelopeIcon className='absolute left-4 text-gray-400' weight='light' size={24} />}
                 placeholder='name@career.com'
-                typeInput='email'
+                type='email'
               />
 
               <InputField
@@ -113,7 +113,7 @@ function LoginPage() {
                 subLabel='Forgot password?'
                 icon={<LockKeyIcon className='absolute left-4 text-gray-400' weight='light' size={24} />}
                 placeholder='•••••••••'
-                typeInput='password'
+                type='password'
               />
 
               <Field orientation='horizontal'>
@@ -130,9 +130,9 @@ function LoginPage() {
           </FieldSet>
 
           {/* Button */}
-          <button className='w-full rounded-full bg-orange-500 py-3 font-semibold text-white hover:bg-orange-500/80'>
+          <Button className='w-full rounded-full bg-orange-500 py-6 font-semibold text-white text-base hover:bg-orange-500/80'>
             Sign In to Dashboard
-          </button>
+          </Button>
 
           {/*Register*/}
           <p className='mt-6 text-center text-sm font-medium text-gray-500'>
