@@ -24,7 +24,7 @@ const InputField = ({ id, label, subLabel, icon, className, ...props }: InputFie
         {icon}
         <Input
           id={id}
-          className='rounded-3xl px-12 py-5 outline-none focus:ring-1 focus:ring-orange-500'
+          className={`rounded-3xl px-12 py-5 outline-none focus:ring-1 focus:ring-orange-500 ${className}`}
           {...props}
         />
       </div>
