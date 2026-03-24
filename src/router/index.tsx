@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import { type RouteObject } from 'react-router-dom';
 import { NAV_PATH } from './router.constant';
 
-const LoginPage = lazy(() => import('@/pages/auth/LogicPage'));
+const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage'));
 const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
 const HomePage = lazy(() => import('@/pages/home'));
