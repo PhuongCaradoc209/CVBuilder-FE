@@ -11,7 +11,7 @@ interface InputFieldProps extends React.ComponentProps<typeof Input> {
 }
 
 const InputField = ({ id, label, subLabel, icon, className, type, ...props }: InputFieldProps) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, _setShowPassword] = useState(false);
   const isPassword = type === 'password';
 
   return (
