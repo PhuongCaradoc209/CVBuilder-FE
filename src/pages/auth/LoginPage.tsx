@@ -1,16 +1,17 @@
-import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
-import { CheckCircleIcon, EnvelopeIcon, FileTextIcon, LockKeyIcon } from '@phosphor-icons/react';
-import GoogleIcon from '@/icon/googleIcon';
 import InputField from '@/components/common/inputField';
-import { Checkbox } from '@/components/ui/checkbox';
-import GithubIcon from '@/icon/githubIcon';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
+import GithubIcon from '@/icon/githubIcon';
+import GoogleIcon from '@/icon/googleIcon';
+import { CheckCircleIcon, EnvelopeIcon, FileTextIcon, LightningIcon, LockKeyIcon } from '@phosphor-icons/react';
+import { Link } from 'react-router';
 
 function LoginPage() {
   return (
     <main className='flex h-screen w-full'>
       {/* LEFT - ORANGE */}
-      <section className='hidden flex-col items-center justify-center bg-linear-to-br from-[#FF8C00] to-[#FF6A00] text-white md:block md:flex md:flex-1'>
+      <section className='hidden flex-col items-center justify-center bg-linear-to-br from-[#FF8C00] to-[#FF6A00] text-white md:flex md:flex-1'>
         {/* TOP */}
         <div className='flex w-90 flex-col justify-center'>
           {/* Logo */}
@@ -34,7 +35,7 @@ function LoginPage() {
 
         {/* CARD DEMO */}
         <div className='mt-10 -rotate-5'>
-          <div className='relative px-55 py-87.5 rounded-4xl bg-white/10 p-6 shadow-2xl backdrop-blur'>
+          <div className='relative aspect-video h-[250px] w-[384px] rounded-4xl bg-white/15 p-6 shadow-2xl backdrop-blur'>
             <div className='mb-5 flex items-center gap-3'>
               <div className='h-14 w-14 rounded-full bg-white/30'></div>
               <div className='flex-1 space-y-2'>
@@ -50,9 +51,13 @@ function LoginPage() {
             </div>
 
             <div className='mt-6 space-x-2'>
-              <div className='inline-block h-6.5 w-16 rounded bg-white/25'></div>
-              <div className='inline-block h-6.5 w-16 rounded bg-white/25'></div>
-              <div className='inline-block h-6.5 w-16 rounded bg-white/25'></div>
+              <div className='inline-block h-6 w-16 rounded bg-white/25'></div>
+              <div className='inline-block h-6 w-16 rounded bg-white/25'></div>
+              <div className='inline-block h-6 w-16 rounded bg-white/25'></div>
+            </div>
+
+            <div className='absolute top-10 -left-10 -rotate-10 rounded-full bg-white px-4 py-6 shadow-lg'>
+              <LightningIcon size={25} color='#FF6A00' weight='bold' />
             </div>
 
             {/* badge */}
@@ -78,13 +83,12 @@ function LoginPage() {
           </div>
 
           {/*Social Login*/}
-
           <div className='mb-6 flex gap-4'>
-            <Button className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-gray-400'>
+            <Button className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-gray-100'>
               <GoogleIcon />
               <span className='text-base font-semibold text-gray-700'>Google</span>
             </Button>
-            <Button className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-gray-400'>
+            <Button className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-gray-100'>
               <GithubIcon />
               <span className='text-base font-semibold text-gray-700'>Github</span>
             </Button>
@@ -112,7 +116,7 @@ function LoginPage() {
                 label='Password'
                 subLabel='Forgot password?'
                 icon={<LockKeyIcon className='absolute left-4 text-gray-400' weight='light' size={24} />}
-                placeholder='•••••••••'
+                placeholder='Enter your password'
                 type='password'
               />
 
@@ -130,14 +134,14 @@ function LoginPage() {
           </FieldSet>
 
           {/* Button */}
-          <Button className='w-full rounded-full bg-orange-500 py-6 font-semibold text-white text-base hover:bg-orange-500/80'>
+          <Button className='w-full rounded-full bg-orange-500 py-6 text-base font-semibold text-white hover:bg-orange-500/80'>
             Sign In to Dashboard
           </Button>
 
           {/*Register*/}
-          <p className='mt-6 text-center text-sm font-medium text-gray-500'>
+          <Link to='/register' className='mt-6 text-center text-sm font-medium text-gray-500'>
             New here? <span className='cursor-pointer text-orange-500'>Create your professional account</span>
-          </p>
+          </Link>
         </div>
       </section>
     </main>

@@ -1,11 +1,12 @@
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import googleIcon from '@/assets/google.svg';
 import githubIcon from '@/assets/github.png';
+import googleIcon from '@/assets/google.svg';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Link } from 'react-router';
 
-import { User, Mail, Lock, Eye } from 'lucide-react';
+import { Lock, Mail, User } from 'lucide-react';
 
 export default function RegisterForm() {
   const handleSubmit = (e: React.FormEvent) => {
@@ -74,9 +75,7 @@ export default function RegisterForm() {
           <div className='relative'>
             <Lock className='absolute top-3.5 left-3 h-4 w-4 text-gray-400' />
 
-            <Input type='password' placeholder='Min. 8 characters' className='pr-10 pl-10' />
-
-            <Eye className='absolute top-3.5 right-3 h-4 w-4 cursor-pointer text-gray-400' />
+            <Input type='password' placeholder='Min. 8 characters' className='pl-10' />
           </div>
         </div>
 
@@ -112,7 +111,9 @@ export default function RegisterForm() {
       {/* SIGN IN */}
       <p className='mt-6 text-center text-sm text-gray-500'>
         Already have an account?
-        <span className='ml-1 cursor-pointer text-orange-500'>Sign in</span>
+        <Link to='/login' className='ml-1 cursor-pointer text-orange-500'>
+          Sign in
+        </Link>
       </p>
     </div>
   );

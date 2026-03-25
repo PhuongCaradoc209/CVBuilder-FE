@@ -35,19 +35,19 @@ const privateRoutes: RouteObject[] = [
       },
       {
         path: NAV_PATH.APP.MY_CVS,
-        element: <div className="text-gray-900">My CVs Page</div>,
+        element: <div className='text-gray-900'>My CVs Page</div>,
       },
       {
         path: NAV_PATH.APP.TEMPLATES,
-        element: <div className="text-gray-900">Templates Page</div>,
+        element: <div className='text-gray-900'>Templates Page</div>,
       },
       {
         path: NAV_PATH.APP.PROFILE,
-        element: <div className="text-gray-900">Profile Page</div>,
+        element: <div className='text-gray-900'>Profile Page</div>,
       },
       {
         path: NAV_PATH.APP.SETTINGS,
-        element: <div className="text-gray-900">Settings Page</div>,
+        element: <div className='text-gray-900'>Settings Page</div>,
       },
     ],
   },
