@@ -7,6 +7,8 @@ const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage'));
 const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
 const HomePage = lazy(() => import('@/pages/home'));
 const NotFoundPage = lazy(() => import('@/pages/not-found'));
+// Import trang Dashboard bạn vừa tạo ở folder src/pages/dashboard/index.tsx
+const DashboardPage = lazy(() => import('@/pages/dashboard')); 
 
 /**
  * Public routes
@@ -30,8 +32,9 @@ const privateRoutes: RouteObject[] = [
     element: <DashboardLayout />,
     children: [
       {
+        // 2. Thay đổi HomePage thành DashboardPage để hiển thị giao diện Figma
         path: NAV_PATH.DASHBOARD,
-        element: <HomePage />,
+        element: <DashboardPage />, 
       },
       {
         path: NAV_PATH.APP.MY_CVS,
