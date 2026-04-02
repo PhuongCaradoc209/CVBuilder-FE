@@ -7,6 +7,7 @@ const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage'));
 const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
 const HomePage = lazy(() => import('@/pages/home'));
 const NotFoundPage = lazy(() => import('@/pages/not-found'));
+const ProfilePage = lazy(() => import('@/pages/profile'));
 
 /**
  * Public routes
@@ -43,7 +44,7 @@ const privateRoutes: RouteObject[] = [
       },
       {
         path: NAV_PATH.APP.PROFILE,
-        element: <div className='text-gray-900'>Profile Page</div>,
+        element: <ProfilePage />,
       },
       {
         path: NAV_PATH.APP.SETTINGS,
