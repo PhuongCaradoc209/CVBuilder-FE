@@ -39,23 +39,12 @@ export function ProfileCard({ user }: ProfileCardProps) {
         <div>
           <p className='text-muted-foreground text-xs font-semibold'>EXPERIENCE</p>
           {user.experience.map((exp, i) => {
-            const colors = ['bg-slate-800', 'bg-blue-500', 'bg-violet-500', 'bg-emerald-500', 'bg-orange-500', 'bg-rose-500'];
+            const colors = ['bg-exp-slate', 'bg-exp-blue', 'bg-exp-violet', 'bg-exp-emerald', 'bg-exp-orange', 'bg-exp-rose'];
             const bg = colors[i % colors.length];
 
             return (
               <div key={i} className='flex gap-3'>
-                <div
-                  className='mt-3.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md'
-                  style={{
-                    backgroundColor: {
-                      'bg-slate-800': '#1e293b',
-                      'bg-blue-500': '#3b82f6',
-                      'bg-violet-500': '#8b5cf6',
-                      'bg-emerald-500': '#10b981',
-                      'bg-orange-500': '#f97316',
-                      'bg-rose-500': '#f43f5e',
-                    }[bg],
-                  }}>
+                <div className={`mt-3.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md ${bg}`}>
                   <span className='text-sm font-bold text-white'>{exp.company.charAt(0).toUpperCase()}</span>
                 </div>
                 <div>
