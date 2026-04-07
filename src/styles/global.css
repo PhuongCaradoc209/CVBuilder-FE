@@ -79,6 +79,12 @@
     --sidebar-accent-foreground: oklch(0.45 0.16 45);
     --sidebar-border: oklch(0.92 0.02 55);
     --sidebar-ring: oklch(0.646 0.222 41.116);
+    --exp-slate: #1e293b;
+    --exp-blue: #3b82f6;
+    --exp-violet: #8b5cf6;
+    --exp-emerald: #10b981;
+    --exp-orange: #f97316;
+    --exp-rose: #f43f5e;
 }
 
 .dark {
@@ -123,4 +129,13 @@
     body {
         @apply bg-background text-foreground;
     }
+
+@layer utilities {
+    .bg-exp-slate { background-color: var(--exp-slate); }
+    .bg-exp-blue { background-color: var(--exp-blue); }
+    .bg-exp-violet { background-color: var(--exp-violet); }
+    .bg-exp-emerald { background-color: var(--exp-emerald); }
+    .bg-exp-orange { background-color: var(--exp-orange); }
+    .bg-exp-rose { background-color: var(--exp-rose); }
+}
 }

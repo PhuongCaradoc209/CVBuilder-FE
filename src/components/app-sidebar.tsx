@@ -12,7 +12,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { sidebarNavConfig } from '@/config/sidebar-nav';
 import { NAV_PATH } from '@/router/router.constant';
@@ -36,7 +35,7 @@ export function AppSidebar() {
         </Link>
       </SidebarHeader>
 
-      <SidebarSeparator className='' />
+      {/* <SidebarSeparator className='' /> */}
 
       <SidebarContent>
         {sidebarNavConfig.map((group) => (
