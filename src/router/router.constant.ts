@@ -7,8 +7,9 @@ export const NAV_PATH = {
   },
   APP: {
     MY_CVS: '/my-cvs',
+    CREATE_CV: '/create-cv',
     TEMPLATES: '/templates',
     PROFILE: '/profile',
     SETTINGS: '/settings',
   },
-};
+} as const;
