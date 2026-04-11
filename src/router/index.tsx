@@ -49,7 +49,7 @@ const appRoutes: RouteObject[] = [
       },
       {
         path: NAV_PATH.APP.TEMPLATES,
-        element: <div className="text-slate-900">Templates Page</div>,
+        element: <div className='text-slate-900'>Templates Page</div>,
       },
       {
         path: NAV_PATH.APP.PROFILE,
@@ -57,7 +57,7 @@ const appRoutes: RouteObject[] = [
       },
       {
         path: NAV_PATH.APP.SETTINGS,
-        element: <div className="text-slate-900">Settings Page</div>,
+        element: <div className='text-slate-900'>Settings Page</div>,
       },
     ],
   },

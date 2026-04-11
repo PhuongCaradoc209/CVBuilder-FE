@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { CVGrid, type CV } from '@/components/my-cvs/cv-grid';
 import { FilterBar } from '@/components/my-cvs/filter-bar';
@@ -155,10 +155,6 @@ export default function MyCvsPage() {
     return result;
   }, [search, tag, template, sortBy]);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [search, tag, template, sortBy]);
-
   const totalPages = Math.max(1, Math.ceil(filteredCvs.length / PAGE_SIZE));
   const safeCurrentPage = Math.min(currentPage, totalPages);
 
@@ -167,26 +163,42 @@ export default function MyCvsPage() {
     return filteredCvs.slice(startIndex, startIndex + PAGE_SIZE);
   }, [filteredCvs, safeCurrentPage]);
 
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setCurrentPage(1);
+  };
+
+  const handleTagChange = (value: string) => {
+    setTag(value);
+    setCurrentPage(1);
+  };
+
+  const handleTemplateChange = (value: string) => {
+    setTemplate(value);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (value: string) => {
+    setSortBy(value);
+    setCurrentPage(1);
+  };
+
   return (
-    <div className="mx-auto w-full max-w-[1440px]">
+    <div className='mx-auto w-full max-w-[1440px]'>
       <PageHeader />
 
       <FilterBar
         totalCount={filteredCvs.length}
         currentCount={currentItems.length}
-        onSearchChange={setSearch}
-        onTagChange={setTag}
-        onTemplateChange={setTemplate}
-        onSortChange={setSortBy}
+        onSearchChange={handleSearchChange}
+        onTagChange={handleTagChange}
+        onTemplateChange={handleTemplateChange}
+        onSortChange={handleSortChange}
       />
 
       <CVGrid cvs={currentItems} />
 
-      <PaginationBar
-        currentPage={safeCurrentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
+      <PaginationBar currentPage={safeCurrentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
       <FloatingCreateButton />
     </div>

@@ -4,11 +4,7 @@ interface PaginationBarProps {
   onPageChange: (page: number) => void;
 }
 
-export function PaginationBar({
-  currentPage,
-  totalPages,
-  onPageChange,
-}: PaginationBarProps) {
+export function PaginationBar({ currentPage, totalPages, onPageChange }: PaginationBarProps) {
   if (totalPages <= 1) return null;
 
   const getPages = () => {
@@ -38,15 +34,14 @@ export function PaginationBar({
   };
 
   return (
-    <nav className="flex justify-center py-10" aria-label="Pagination">
-      <div className="flex items-center gap-2">
+    <nav className='flex justify-center py-10' aria-label='Pagination'>
+      <div className='flex items-center gap-2'>
         <button
-          type="button"
+          type='button'
           onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
-          className="inline-flex h-10 min-w-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-600 transition-colors hover:bg-slate-50 disabled:pointer-events-none disabled:opacity-40"
+          className='inline-flex h-10 min-w-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-600 transition-colors hover:bg-slate-50 disabled:pointer-events-none disabled:opacity-40'
           disabled={currentPage === 1}
-          aria-label="Previous page"
-        >
+          aria-label='Previous page'>
           ‹
         </button>
 
@@ -54,14 +49,13 @@ export function PaginationBar({
           page === '...' ? (
             <span
               key={`ellipsis-${idx}`}
-              className="inline-flex h-10 min-w-10 items-center justify-center text-sm text-slate-400"
-            >
+              className='inline-flex h-10 min-w-10 items-center justify-center text-sm text-slate-400'>
               ...
             </span>
           ) : (
             <button
               key={page}
-              type="button"
+              type='button'
               onClick={() => onPageChange(page)}
               className={
                 page === currentPage
@@ -69,20 +63,18 @@ export function PaginationBar({
                   : 'inline-flex h-10 min-w-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-600 transition-colors hover:bg-slate-50'
               }
               aria-label={`Go to page ${page}`}
-              aria-current={page === currentPage ? 'page' : undefined}
-            >
+              aria-current={page === currentPage ? 'page' : undefined}>
               {page}
             </button>
           ),
         )}
 
         <button
-          type="button"
+          type='button'
           onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
-          className="inline-flex h-10 min-w-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-600 transition-colors hover:bg-slate-50 disabled:pointer-events-none disabled:opacity-40"
+          className='inline-flex h-10 min-w-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-600 transition-colors hover:bg-slate-50 disabled:pointer-events-none disabled:opacity-40'
           disabled={currentPage === totalPages}
-          aria-label="Next page"
-        >
+          aria-label='Next page'>
           ›
         </button>
       </div>
