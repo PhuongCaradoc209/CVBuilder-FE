@@ -1,6 +1,8 @@
 import { FileText } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
+import { sidebarNavConfig } from '@/config/sidebar-nav';
+import { NAV_PATH } from '@/router/router.constant';
 import {
   Sidebar,
   SidebarContent,
@@ -13,8 +15,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { sidebarNavConfig } from '@/config/sidebar-nav';
-import { NAV_PATH } from '@/router/router.constant';
 
 export function AppSidebar() {
   const location = useLocation();
@@ -29,13 +29,11 @@ export function AppSidebar() {
             <FileText className='h-4 w-4 text-white' />
           </div>
 
-          <span className='truncate text-lg font-semibold text-gray-900 group-data-[collapsible=icon]:hidden'>
+          <span className='truncate text-lg font-semibold text-slate-900 group-data-[collapsible=icon]:hidden'>
             CV Builder Pro
           </span>
         </Link>
       </SidebarHeader>
-
-      {/* <SidebarSeparator className='' /> */}
 
       <SidebarContent>
         {sidebarNavConfig.map((group) => (
@@ -68,7 +66,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter>
-        <div className='truncate px-2 py-1.5 text-xs text-gray-400 group-data-[collapsible=icon]:hidden'>
+        <div className='truncate px-2 py-1.5 text-xs text-slate-400 group-data-[collapsible=icon]:hidden'>
           &copy; {new Date().getFullYear()} CV Builder Pro
         </div>
       </SidebarFooter>

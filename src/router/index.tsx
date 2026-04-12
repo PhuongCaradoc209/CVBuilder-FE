@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { type RouteObject } from 'react-router-dom';
+
 import { NAV_PATH } from './router.constant';
 
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
@@ -8,11 +9,13 @@ const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
 const HomePage = lazy(() => import('@/pages/home'));
 const NotFoundPage = lazy(() => import('@/pages/not-found'));
 const ProfilePage = lazy(() => import('@/pages/profile'));
+const MyCvsPage = lazy(() => import('@/pages/my-cvs'));
+const CreateCvPage = lazy(() => import('@/pages/create-cv'));
 
 /**
- * Public routes
+ * Auth routes
  */
-const publicRoutes: RouteObject[] = [
+const authRoutes: RouteObject[] = [
   {
     path: NAV_PATH.AUTH.LOGIN,
     element: <LoginPage />,
@@ -24,9 +27,11 @@ const publicRoutes: RouteObject[] = [
 ];
 
 /**
- * Private routes
+ * App routes
+ * Chỉ là grouped routes theo layout.
+ * Chưa có auth guard thật trong file này.
  */
-const privateRoutes: RouteObject[] = [
+const appRoutes: RouteObject[] = [
   {
     element: <DashboardLayout />,
     children: [
@@ -36,11 +41,15 @@ const privateRoutes: RouteObject[] = [
       },
       {
         path: NAV_PATH.APP.MY_CVS,
-        element: <div className='text-gray-900'>My CVs Page</div>,
+        element: <MyCvsPage />,
+      },
+      {
+        path: NAV_PATH.APP.CREATE_CV,
+        element: <CreateCvPage />,
       },
       {
         path: NAV_PATH.APP.TEMPLATES,
-        element: <div className='text-gray-900'>Templates Page</div>,
+        element: <div className='text-slate-900'>Templates Page</div>,
       },
       {
         path: NAV_PATH.APP.PROFILE,
@@ -48,7 +57,7 @@ const privateRoutes: RouteObject[] = [
       },
       {
         path: NAV_PATH.APP.SETTINGS,
-        element: <div className='text-gray-900'>Settings Page</div>,
+        element: <div className='text-slate-900'>Settings Page</div>,
       },
     ],
   },
@@ -62,4 +71,4 @@ const notFoundRoute: RouteObject = {
   element: <NotFoundPage />,
 };
 
-export const routes: RouteObject[] = [...privateRoutes, ...publicRoutes, notFoundRoute];
+export const routes: RouteObject[] = [...appRoutes, ...authRoutes, notFoundRoute];
