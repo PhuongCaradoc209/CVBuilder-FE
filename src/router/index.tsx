@@ -6,7 +6,6 @@ import { NAV_PATH } from './router.constant';
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage'));
 const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
-const HomePage = lazy(() => import('@/pages/home'));
 const NotFoundPage = lazy(() => import('@/pages/not-found'));
 
 const DashboardPage = lazy(() => import('@/pages/dashboard')); 
