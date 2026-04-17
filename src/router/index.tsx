@@ -6,8 +6,9 @@ import { NAV_PATH } from './router.constant';
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage'));
 const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
-const HomePage = lazy(() => import('@/pages/home'));
 const NotFoundPage = lazy(() => import('@/pages/not-found'));
+
+const DashboardPage = lazy(() => import('@/pages/dashboard')); 
 const ProfilePage = lazy(() => import('@/pages/profile'));
 const MyCvsPage = lazy(() => import('@/pages/my-cvs'));
 const CreateCvPage = lazy(() => import('@/pages/create-cv'));
@@ -36,8 +37,9 @@ const appRoutes: RouteObject[] = [
     element: <DashboardLayout />,
     children: [
       {
+        // 2. Thay đổi HomePage thành DashboardPage để hiển thị giao diện Figma
         path: NAV_PATH.DASHBOARD,
-        element: <HomePage />,
+        element: <DashboardPage />, 
       },
       {
         path: NAV_PATH.APP.MY_CVS,
