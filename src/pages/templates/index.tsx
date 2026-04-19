@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { CaretDownIcon, CommandIcon } from '@phosphor-icons/react';
+import { CommandIcon } from '@phosphor-icons/react';
 
 const templates = [
   {
@@ -34,19 +34,18 @@ const templates = [
     tags: ['Visual', 'Modern'],
     image: 'img6.png',
   },
-  {
-    title: 'Student Starter',
-    tags: ['Entry level', '1 column'],
-    image: 'img7.png',
-  },
-  {
-    title: 'The Editorial',
-    tags: ['Premium', 'Serif'],
-    image: 'img8.png',
-  },
 ];
 
 export default function TemplatesPage() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredTemplates = templates.filter((t) => {
+    const query = searchQuery.toLowerCase();
+    const titleMatch = t.title.toLowerCase().includes(query);
+    const tagMatch = t.tags.some((tag) => tag.toLowerCase().includes(query));
+    return titleMatch || tagMatch;
+  });
+
   return (
     <div className='space-y-10 px-8 pb-8'>
       {/* HERO */}
@@ -59,43 +58,15 @@ export default function TemplatesPage() {
         </p>
       </div>
 
-      {/* FILTER BAR */}
-      <div className='flex flex-col gap-4 md:flex-row'>
-        <Input placeholder='Search by job title or keyword...' />
+      <Input
+        placeholder='Search by job title or keyword...'
+        className='w-[500px] border border-gray-300'
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
 
-        <Select>
-          <SelectTrigger className='font-semibold data-[placeholder]:text-black/80'>
-            <SelectValue placeholder='Industry' />
-          </SelectTrigger>
-          <SelectContent className='border border-gray-300'>
-            <SelectItem value='tech'>Tech</SelectItem>
-            <SelectItem value='business'>Business</SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Select>
-          <SelectTrigger className='font-semibold data-[placeholder]:text-black/80'>
-            <SelectValue placeholder='Style' />
-          </SelectTrigger>
-          <SelectContent className='border border-gray-300'>
-            <SelectItem value='modern'>Modern</SelectItem>
-            <SelectItem value='classic'>Classic</SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Select>
-          <SelectTrigger className='font-semibold data-[placeholder]:text-black/80'>
-            <SelectValue placeholder='Color Theme' />
-          </SelectTrigger>
-          <SelectContent className='border border-gray-300'>
-            <SelectItem value='dark'>Dark</SelectItem>
-            <SelectItem value='light'>Light</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4'>
-        {templates.map((item, index) => (
+      <div className='grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3'>
+        {filteredTemplates.map((item, index) => (
           <div key={index} className='flex flex-col overflow-hidden rounded-xl border border-gray-400 transition hover:shadow-md'>
             {/* IMAGE */}
             <div className='h-55 w-full'>
@@ -122,15 +93,7 @@ export default function TemplatesPage() {
         ))}
       </div>
 
-      {/* LOAD MORE */}
-      {/* LOAD MORE */}
-      <div className='flex flex-col items-center justify-center space-y-2 pt-4'>
-        <Button className='h-auto bg-gray-200 !px-10 py-3 text-base font-semibold text-black/80 shadow-none hover:bg-gray-300'>
-          Load More Templates
-          <CaretDownIcon size={32} weight='bold' />
-        </Button>
-        <p className='text-sm text-gray-400'>Showing 8 of 124 curated templates</p>
-      </div>
+      <p className='text-center text-sm text-gray-500'>Showing {filteredTemplates.length} curated templates</p>
 
       {/* SMART MATCH (FLOATING) */}
       <div className='fixed right-6 bottom-6 w-72 space-y-3 rounded-xl bg-white p-4 shadow-lg'>
