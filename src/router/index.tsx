@@ -8,10 +8,11 @@ const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage'));
 const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
 const NotFoundPage = lazy(() => import('@/pages/not-found'));
 
-const DashboardPage = lazy(() => import('@/pages/dashboard')); 
+const DashboardPage = lazy(() => import('@/pages/dashboard'));
 const ProfilePage = lazy(() => import('@/pages/profile'));
 const MyCvsPage = lazy(() => import('@/pages/my-cvs'));
 const CreateCvPage = lazy(() => import('@/pages/create-cv'));
+const TemplatesPage = lazy(() => import('@/pages/templates'));
 
 /**
  * Auth routes
@@ -39,7 +40,7 @@ const appRoutes: RouteObject[] = [
       {
         // 2. Thay đổi HomePage thành DashboardPage để hiển thị giao diện Figma
         path: NAV_PATH.DASHBOARD,
-        element: <DashboardPage />, 
+        element: <DashboardPage />,
       },
       {
         path: NAV_PATH.APP.MY_CVS,
@@ -51,7 +52,7 @@ const appRoutes: RouteObject[] = [
       },
       {
         path: NAV_PATH.APP.TEMPLATES,
-        element: <div className='text-slate-900'>Templates Page</div>,
+        element: <TemplatesPage />,
       },
       {
         path: NAV_PATH.APP.PROFILE,
