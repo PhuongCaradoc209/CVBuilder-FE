@@ -5,13 +5,13 @@ import { CommandIcon } from '@phosphor-icons/react';
 
 const templates = [
   {
-    title: 'Modern Minimalist',
-    tags: ['ATS-friendly', '1 column'],
+    title: 'Modern Sidebar',
+    tags: ['Professional', 'Two-column'],
     image: 'https://tse4.mm.bing.net/th/id/OIP.pU0aNhi8bY5nJWvPtxBmzgHaKe?rs=1&pid=ImgDetMain&o=7&rm=3',
   },
   {
-    title: 'Executive Pro',
-    tags: ['Corporate', 'Multi-page'],
+    title: 'ATS Standard',
+    tags: ['Simple', 'Professional'],
     image: 'img2.png',
   },
   {
