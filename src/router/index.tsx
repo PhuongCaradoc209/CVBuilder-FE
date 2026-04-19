@@ -1,6 +1,5 @@
 import { lazy } from 'react';
 import { type RouteObject } from 'react-router-dom';
-import { mockCVData } from '@/components/cv-templates/modern-sidebar';
 
 import { NAV_PATH } from './router.constant';
 
@@ -14,8 +13,6 @@ const ProfilePage = lazy(() => import('@/pages/profile'));
 const MyCvsPage = lazy(() => import('@/pages/my-cvs'));
 const CreateCvPage = lazy(() => import('@/pages/create-cv'));
 const TemplatesPage = lazy(() => import('@/pages/templates'));
-// test template
-const ModernSidebarTemplate = lazy(() => import('@/components/cv-templates/modern-sidebar'));
 
 /**
  * Auth routes
@@ -33,15 +30,12 @@ const authRoutes: RouteObject[] = [
 
 /**
  * App routes
- * Chỉ là grouped routes theo layout.
- * Chưa có auth guard thật trong file này.
  */
 const appRoutes: RouteObject[] = [
   {
     element: <DashboardLayout />,
     children: [
       {
-        // 2. Thay đổi HomePage thành DashboardPage để hiển thị giao diện Figma
         path: NAV_PATH.DASHBOARD,
         element: <DashboardPage />,
       },
@@ -77,13 +71,4 @@ const notFoundRoute: RouteObject = {
   element: <NotFoundPage />,
 };
 
-const testTemplateRoute: RouteObject = {
-  path: '/test-template',
-  element: (
-    <div className='flex min-h-screen items-center justify-center bg-gray-500 py-10'>
-      <ModernSidebarTemplate data={mockCVData} />
-    </div>
-  ),
-};
-
-export const routes: RouteObject[] = [...appRoutes, ...authRoutes, testTemplateRoute, notFoundRoute];
+export const routes: RouteObject[] = [...appRoutes, ...authRoutes, notFoundRoute];
