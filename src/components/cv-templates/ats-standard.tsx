@@ -23,7 +23,6 @@ export default function ATSStandardTemplate({
   educations = [],
   skills = [],
   certificates = [],
-  languages = [],
   className,
 }: ATSStandardTemplateProps) {
   return (
