@@ -49,14 +49,16 @@ const ModernSidebarTemplate: React.FC<Props> = ({ data }) => {
         </section>
 
         {/* Languages */}
-        <section>
-          <h2 className='mb-4 border-b-2 border-gray-400 py-2 text-2xl font-bold'>Languages</h2>
-          <div className='flex flex-col space-y-2 text-base text-gray-700'>
-            {data.languages.map((language, index) => (
-              <p key={index}>{language.languageName}</p>
-            ))}
-          </div>
-        </section>
+        {data.languages && data.languages.length > 0 && (
+          <section>
+            <h2 className='mb-4 border-b-2 border-gray-400 py-2 text-2xl font-bold'>Languages</h2>
+            <div className='flex flex-col space-y-2 text-base text-gray-700'>
+              {data.languages.map((language, index) => (
+                <p key={index}>{language.languageName}</p>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
 
       {/* MAIN */}
@@ -122,7 +124,7 @@ const ModernSidebarTemplate: React.FC<Props> = ({ data }) => {
   );
 };
 
-// export default ModernSidebarTemplate;
+export default ModernSidebarTemplate;
 
 // export const mockCVData: CVData = {
 //   info: {
