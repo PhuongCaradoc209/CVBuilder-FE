@@ -61,7 +61,8 @@ export default function ClassicProfessionalTemplate({
   const hasSkills = skills.length > 0;
 
   return (
-    <div className={['bg-card mx-auto w-full max-w-5xl overflow-hidden shadow-lg', className].filter(Boolean).join(' ')}>
+    <div
+      className={['bg-card mx-auto aspect-3/4 w-full max-w-5xl overflow-hidden shadow-lg', className].filter(Boolean).join(' ')}>
       <header className='bg-foreground text-background px-8 py-10 sm:px-12'>
         <div className='flex flex-col gap-6 md:flex-row md:items-center'>
           {avatarUrl ? (

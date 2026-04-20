@@ -42,7 +42,7 @@ function ImageFallback({ fullName }: { fullName: string }) {
     .join('');
 
   return (
-    <div className='bg-muted text-foreground/55 flex aspect-[4/5] w-full items-center justify-center text-3xl font-bold tracking-[0.25em] uppercase'>
+    <div className='bg-muted text-foreground/55 flex aspect-4/5 w-full items-center justify-center text-3xl font-bold tracking-[0.25em] uppercase'>
       {initials || 'CV'}
     </div>
   );
@@ -90,10 +90,10 @@ export default function EditorialCreativeTemplate({
   const hasLanguages = languages.length > 0;
 
   return (
-    <div className={['mx-auto w-full max-w-6xl bg-zinc-100 shadow-lg', className].filter(Boolean).join(' ')}>
+    <div className={['mx-auto aspect-3/4 w-full max-w-6xl bg-zinc-100 shadow-lg', className].filter(Boolean).join(' ')}>
       <div className='grid gap-10 px-8 py-8 md:grid-cols-[1.15fr_0.85fr] md:px-12 md:py-10'>
         <div className='min-w-0'>
-          <div className='border-border flex flex-col gap-8 border-b pb-8 lg:flex-row lg:items-start lg:justify-between'>
+          <div className='border-border flex flex-col gap-8 border-b pb-8 lg:flex-col lg:items-start lg:justify-between'>
             <div className='min-w-0'>
               {firstName && <p className='text-foreground/85 text-2xl tracking-[0.32em] uppercase'>{firstName}</p>}
 
@@ -207,7 +207,7 @@ export default function EditorialCreativeTemplate({
         <aside className='space-y-8'>
           <div className='bg-card overflow-hidden rounded-sm shadow-sm'>
             {avatarUrl ? (
-              <img src={avatarUrl} alt={info.fullName} className='aspect-[4/5] w-full object-cover' />
+              <img src={avatarUrl} alt={info.fullName} className='aspect-4/5 w-full object-cover' />
             ) : (
               <ImageFallback fullName={info.fullName} />
             )}

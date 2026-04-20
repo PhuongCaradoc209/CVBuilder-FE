@@ -1,11 +1,101 @@
-import { Link } from 'react-router-dom';
-import { Download, Eye, Search, Share2 } from 'lucide-react';
+import { useMemo } from 'react';
 
+import { Download, Eye, Search, Share2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+import EditorialCreativeTemplate from '@/components/templates/editorial-creative-template';
+import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { NAV_PATH } from '@/router/router.constant';
+import { ScaledTemplatePreview } from './components/TemplateReview';
 
 export default function CreateCvPage() {
+  const mockInfo: Info = useMemo(
+    () => ({
+      fullName: 'Alex Morgan',
+      jobTitle: 'Frontend Developer',
+      email: 'alex.morgan@example.com',
+      phone: '+84 912 345 678',
+      address: 'Ho Chi Minh City, Vietnam',
+      url: 'https://linkedin.com/in/alexmorgan',
+      summary:
+        'Frontend developer focused on building fast, accessible UI systems. Comfortable shipping features end-to-end from design handoff to production monitoring.',
+      socialLinks: [
+        { platform: 'LinkedIn', url: 'https://linkedin.com/in/alexmorgan' },
+        { platform: 'GitHub', url: 'https://github.com/alexmorgan' },
+      ],
+    }),
+    [],
+  );
+
+  const mockExperiences: Experience[] = useMemo(
+    () => [
+      {
+        companyName: 'NovaTech',
+        position: 'Frontend Developer',
+        startDate: '06/2023',
+        endDate: 'Present',
+        description:
+          'Built reusable UI components with React + Tailwind, improved Lighthouse performance from 68 → 92, and implemented form flows with validation and optimistic updates.',
+      },
+      {
+        companyName: 'Bright Studio',
+        position: 'Junior Web Developer',
+        startDate: '08/2022',
+        endDate: '05/2023',
+        description:
+          'Delivered responsive landing pages and dashboards, integrated REST APIs, and collaborated with designers to refine spacing/typography for better readability.',
+      },
+    ],
+    [],
+  );
+
+  const mockEducations: Education[] = useMemo(
+    () => [
+      {
+        schoolName: 'University of Technology',
+        major: 'Software Engineering',
+        startDate: '2020',
+        endDate: '2024',
+        description: 'Relevant coursework: Web Development, Data Structures, Software Design, UX Fundamentals.',
+      },
+    ],
+    [],
+  );
+
+  const mockSkills: Skill[] = useMemo(
+    () => [
+      { skillName: 'React' },
+      { skillName: 'TypeScript' },
+      { skillName: 'Vite' },
+      { skillName: 'Tailwind CSS' },
+      { skillName: 'REST APIs' },
+      { skillName: 'Accessibility (a11y)' },
+    ],
+    [],
+  );
+
+  const mockCertificates: Certificate[] = useMemo(
+    () => [
+      {
+        name: 'Front-End Developer',
+        issuer: 'Meta (Coursera)',
+        issueDate: '2024',
+        url: 'https://coursera.org/verify/example',
+      },
+    ],
+    [],
+  );
+
+  const mockLanguages: Language[] = useMemo(
+    () => [
+      { languageName: 'Vietnamese', level: 'Native' },
+      { languageName: 'English', level: 'Intermediate' },
+    ],
+    [],
+  );
+
   return (
     <div className='mx-auto w-full max-w-7xl'>
       <div className='mb-8 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between'>
@@ -80,45 +170,17 @@ export default function CreateCvPage() {
             <Download className='text-muted-foreground h-4 w-4' />
           </div>
 
-          <div className='bg-card mx-auto w-full max-w-md rounded-sm p-8 shadow-lg'>
-            <h2 className='text-foreground text-3xl font-bold'>ALEX JONES</h2>
-            <p className='text-primary mt-1 text-sm font-semibold tracking-wider uppercase'>Senior Product Designer</p>
-
-            <div className='mt-8 flex gap-8'>
-              <div className='flex-1 space-y-6'>
-                <div>
-                  <h3 className='text-foreground text-xs font-bold tracking-wider uppercase'>Professional Experience</h3>
-                  <div className='bg-border mt-3 h-2 w-28 rounded' />
-                  <div className='bg-muted mt-2 h-2 w-full rounded' />
-                  <div className='bg-muted mt-2 h-2 w-11/12 rounded' />
-                </div>
-
-                <div>
-                  <h3 className='text-foreground text-xs font-bold tracking-wider uppercase'>Education</h3>
-                  <div className='bg-border mt-3 h-2 w-24 rounded' />
-                  <div className='bg-muted mt-2 h-2 w-10/12 rounded' />
-                </div>
-              </div>
-
-              <div className='w-36 space-y-6'>
-                <div className='bg-muted mx-auto h-20 w-20 rounded-lg' />
-
-                <div>
-                  <h3 className='text-foreground text-xs font-bold tracking-wider uppercase'>Contact</h3>
-                  <div className='bg-muted mt-3 h-2 w-full rounded' />
-                  <div className='bg-muted mt-2 h-2 w-10/12 rounded' />
-                  <div className='bg-muted mt-2 h-2 w-8/12 rounded' />
-                </div>
-
-                <div>
-                  <h3 className='text-foreground text-xs font-bold tracking-wider uppercase'>Expertise</h3>
-                  <div className='bg-muted mt-3 h-2 w-full rounded' />
-                  <div className='bg-muted mt-2 h-2 w-10/12 rounded' />
-                  <div className='bg-muted mt-2 h-2 w-9/12 rounded' />
-                </div>
-              </div>
-            </div>
-          </div>
+          <ScaledTemplatePreview>
+            <EditorialCreativeTemplate
+              info={mockInfo}
+              experiences={mockExperiences}
+              educations={mockEducations}
+              skills={mockSkills}
+              certificates={mockCertificates}
+              languages={mockLanguages}
+              className='w-6xl max-w-none'
+            />
+          </ScaledTemplatePreview>
         </div>
       </div>
     </div>
