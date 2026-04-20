@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
 
 export interface ModernSidebarTemplateProps {
