@@ -1,3 +1,8 @@
+export interface SocialLink {
+  platform: string;
+  url: string;
+}
+
 export interface Info {
   fullName: string;
   jobTitle: string;
@@ -6,6 +11,7 @@ export interface Info {
   address: string;
   url?: string;
   summary: string;
+  socialLinks?: SocialLink[];
 }
 
 export interface Experience {
@@ -37,9 +43,9 @@ export interface Project {
   endDate: string;
 }
 
-export interface Certificate { // = Reward 
+export interface Certificate {
   name: string;
-  issuer: string; // nơi cấp 
+  issuer: string;
   issueDate: string;
   expiryDate?: string;
   url?: string;
@@ -57,4 +63,5 @@ export interface CVData {
   skills: Skill[];
   projects: Project[];
   certificates: Certificate[];
-} 
+  languages?: Language[];
+}
