@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { Download, Eye, Search, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-import EditorialCreativeTemplate from '@/components/templates/editorial-creative-template';
+import ModernSidebarTemplate from '@/components/cv-templates/modern-sidebar';
 import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
@@ -171,14 +171,13 @@ export default function CreateCvPage() {
           </div>
 
           <ScaledTemplatePreview>
-            <EditorialCreativeTemplate
+            <ModernSidebarTemplate
               info={mockInfo}
               experiences={mockExperiences}
               educations={mockEducations}
               skills={mockSkills}
               certificates={mockCertificates}
               languages={mockLanguages}
-              className='w-6xl max-w-none'
             />
           </ScaledTemplatePreview>
         </div>
