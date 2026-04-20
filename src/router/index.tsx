@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { type RouteObject } from 'react-router-dom';
-import { mockCVData } from '@/components/cv-templates/modern-sidebar';
+// import { mockCVData } from '@/components/cv-templates/modern-sidebar';
 
 import { NAV_PATH } from './router.constant';
 
@@ -77,13 +77,13 @@ const notFoundRoute: RouteObject = {
   element: <NotFoundPage />,
 };
 
-const testTemplateRoute: RouteObject = {
-  path: '/test-template',
-  element: (
-    <div className='flex min-h-screen items-center justify-center bg-gray-500 py-10'>
-      <ModernSidebarTemplate data={mockCVData} />
-    </div>
-  ),
-};
+// const testTemplateRoute: RouteObject = {
+//   path: '/test-template',
+//   element: (
+//     <div className='flex min-h-screen items-center justify-center bg-gray-500 py-10'>
+//       <ModernSidebarTemplate data={mockCVData} />
+//     </div>
+//   ),
+// };
 
-export const routes: RouteObject[] = [...appRoutes, ...authRoutes, testTemplateRoute, notFoundRoute];
+export const routes: RouteObject[] = [...appRoutes, ...authRoutes, notFoundRoute];

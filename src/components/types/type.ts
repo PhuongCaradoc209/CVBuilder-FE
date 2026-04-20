@@ -5,6 +5,7 @@ export interface Info {
   phone: string;
   address: string;
   url?: string;
+  imgUrl?: string;
   summary: string;
 }
 
@@ -55,6 +56,7 @@ export interface CVData {
   experiences: Experience[];
   educations: Education[];
   skills: Skill[];
-  projects: Project[];
+  projects?: Project[];
   certificates: Certificate[];
+  languages: Language[];
 } 
