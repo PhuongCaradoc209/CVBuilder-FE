@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { CommandIcon } from '@phosphor-icons/react';
+import modernSidebarImg from '@/assets/templates/modern-sidebar.jpeg';
 
 const templates = [
   {
     title: 'Modern Sidebar',
     tags: ['Professional', 'Two-column'],
-    image: 'https://tse4.mm.bing.net/th/id/OIP.pU0aNhi8bY5nJWvPtxBmzgHaKe?rs=1&pid=ImgDetMain&o=7&rm=3',
+    image: modernSidebarImg,
   },
   {
     title: 'ATS Standard',

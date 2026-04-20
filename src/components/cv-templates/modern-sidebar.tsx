@@ -9,7 +9,7 @@ const ModernSidebarTemplate: React.FC<Props> = ({ data }) => {
   return (
     <div className='flex aspect-3/4 max-w-5xl bg-white font-sans text-gray-800'>
       {/* SIDEBAR */}
-      <div className='flex w-1/3 flex-col gap-4 bg-gray-100 p-7'>
+      <div className='flex w-1/3 flex-col gap-5.5 bg-gray-100 p-7'>
         {/* Profile Image */}
         <div className='mb-8 flex justify-center pt-14'>
           <div className='h-48 w-48 overflow-hidden rounded-full border-white shadow-sm'>
@@ -122,4 +122,87 @@ const ModernSidebarTemplate: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default ModernSidebarTemplate;
+// export default ModernSidebarTemplate;
+
+// export const mockCVData: CVData = {
+//   info: {
+//     fullName: 'Lorna Alvarado',
+//     jobTitle: 'Digital Marketing Specialist',
+//     email: 'hello@reallygreatsite.com',
+//     phone: '+123-456-7890',
+//     address: '123 Anywhere St., Any City',
+//     imgUrl: 'https://www.shareicon.net/data/512x512/2016/07/26/802043_man_512x512.png',
+//     summary:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor, quis tempus arcu elementum. In elementum elit at dui tristique feugiat. Mauris convallis, mi at mattis malesuada, neque nulla volutpat dolor, hendrerit faucibus eros nibh ut nunc. Proin luctus urna id nunc sagittis dignissim. Sed in libero sed libero dictum dapibus. Vivamus fermentum est eget lorem aliquet, vel tempus metus dignissim. Donec risus arcu',
+//   },
+
+//   skills: [
+//     { skillName: 'Web Design' },
+//     { skillName: 'Branding' },
+//     { skillName: 'Graphic Design' },
+//     { skillName: 'SEO' },
+//     { skillName: 'Marketing' },
+//     { skillName: 'Copywriting & Story writing' },
+//   ],
+
+//   experiences: [
+//     {
+//       companyName: 'Larana Inc, Branding',
+//       position: 'Social Media Manager',
+//       startDate: '2019',
+//       endDate: '2022',
+//       description:
+//         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor, quis tempus arcu elementum. In elementum elit at dui tristique feugiat. Mauris convallis, mi at mattis malesuada, neque nulla volutpat dolor, hendrerit faucibus eros nibh ut nunc.',
+//     },
+//     {
+//       companyName: 'Larana Inc, Branding',
+//       position: 'Digital Marketing Manager',
+//       startDate: '2017',
+//       endDate: '2019',
+//       description:
+//         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor, quis tempus arcu elementum. In elementum elit at dui tristique feugiat. Mauris convallis, mi at mattis malesuada, neque nulla volutpat dolor, hendrerit faucibus eros nibh ut nunc.',
+//     },
+//     {
+//       companyName: 'Larana Inc, Branding',
+//       position: 'Digital Marketing Manager',
+//       startDate: '2015',
+//       endDate: '2017',
+//       description:
+//         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor, quis tempus arcu elementum. In elementum elit at dui tristique feugiat. Mauris convallis, mi at mattis malesuada, neque nulla volutpat dolor, hendrerit faucibus eros nibh ut nunc.',
+//     },
+//   ],
+
+//   educations: [
+//     {
+//       schoolName: 'Fauget University',
+//       major: 'Master Of Marketing and Business',
+//       startDate: '2011',
+//       endDate: '2014',
+//       description:
+//         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor, quis tempus arcu elementum. In elementum elit at dui tristique feugiat. Mauris convallis, mi at mattis malesuada, neque nulla volutpat dolor, hendrerit faucibus eros nibh ut nunc. Proin luctus urna i',
+//     },
+//     {
+//       schoolName: 'Fauget University',
+//       major: 'Master Of Marketing and Business',
+//       startDate: '2011',
+//       endDate: '2014',
+//       description:
+//         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor, quis tempus arcu elementum. In elementum elit at dui tristique feugiat. Mauris convallis, mi at mattis malesuada, neque nulla volutpat dolor, hendrerit faucibus eros nibh ut nunc. Proin luctus urna i',
+//     },
+//   ],
+
+//   certificates: [
+//     {
+//       name: 'Best Employee of the Year',
+//       issuer: 'Liceria & Co.',
+//       issueDate: 'Oct 2019',
+//     },
+//     {
+//       name: 'Best Employee of the Year',
+//       issuer: 'Liceria & Co.',
+//       issueDate: 'Oct 2017',
+//     },
+//   ],
+
+//   languages: [{ languageName: 'English' }, { languageName: 'Vietnamese' }],
+// };

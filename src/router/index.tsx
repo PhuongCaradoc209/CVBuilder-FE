@@ -15,7 +15,7 @@ const MyCvsPage = lazy(() => import('@/pages/my-cvs'));
 const CreateCvPage = lazy(() => import('@/pages/create-cv'));
 const TemplatesPage = lazy(() => import('@/pages/templates'));
 // test template
-const ModernSidebarTemplate = lazy(() => import('@/components/cv-templates/modern-sidebar'));
+// const ModernSidebarTemplate = lazy(() => import('@/components/cv-templates/modern-sidebar'));
 
 /**
  * Auth routes
@@ -87,3 +87,4 @@ const notFoundRoute: RouteObject = {
 // };
 
 export const routes: RouteObject[] = [...appRoutes, ...authRoutes, notFoundRoute];
+// export const routes: RouteObject[] = [...appRoutes, ...authRoutes, testTemplateRoute, notFoundRoute];
