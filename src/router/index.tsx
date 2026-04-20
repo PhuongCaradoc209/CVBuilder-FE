@@ -33,15 +33,12 @@ const authRoutes: RouteObject[] = [
 
 /**
  * App routes
- * Chỉ là grouped routes theo layout.
- * Chưa có auth guard thật trong file này.
  */
 const appRoutes: RouteObject[] = [
   {
     element: <DashboardLayout />,
     children: [
       {
-        // 2. Thay đổi HomePage thành DashboardPage để hiển thị giao diện Figma
         path: NAV_PATH.DASHBOARD,
         element: <DashboardPage />,
       },
