@@ -38,9 +38,10 @@ export interface Project {
   endDate: string;
 }
 
-export interface Certificate { // = Reward 
+export interface Certificate {
+  // = Reward
   name: string;
-  issuer: string; // nơi cấp 
+  issuer: string; // nơi cấp
   issueDate: string;
   expiryDate?: string;
   url?: string;
@@ -59,4 +60,4 @@ export interface CVData {
   projects?: Project[];
   certificates: Certificate[];
   languages: Language[];
-} 
+}
