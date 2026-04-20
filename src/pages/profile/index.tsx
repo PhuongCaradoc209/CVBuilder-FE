@@ -29,7 +29,7 @@ export default function ProfilePage() {
   return (
     <div className='space-y-8 px-6 pt-6 pb-6'>
       <div>
-        <h1 className='text-2xl font-bold'>Profile & Settings</h1>
+        <h1 className='text-4xl font-bold'>Profile & Settings</h1>
         <p className='text-muted-foreground'>Manage your professional presence and account security</p>
       </div>
 

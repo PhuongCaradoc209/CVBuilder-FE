@@ -16,6 +16,8 @@ const CreateCvPage = lazy(() => import('@/pages/create-cv'));
 const TemplatesPage = lazy(() => import('@/pages/templates'));
 // test template
 // const ModernSidebarTemplate = lazy(() => import('@/components/cv-templates/modern-sidebar'));
+// const ATSStandardTemplate = lazy(() => import('@/components/cv-templates/ats-standard'));
+// import { mockATSData } from '@/components/cv-templates/ats-standard';
 
 /**
  * Auth routes
@@ -79,6 +81,15 @@ const notFoundRoute: RouteObject = {
 //   element: (
 //     <div className='flex min-h-screen items-center justify-center bg-gray-500 py-10'>
 //       <ModernSidebarTemplate data={mockCVData} />
+//     </div>
+//   ),
+// };
+
+// const testTemplateRoute: RouteObject = {
+//   path: '/test-template',
+//   element: (
+//     <div className='flex min-h-screen items-center justify-center bg-gray-500 py-10'>
+//       <ATSStandardTemplate {...mockATSData} />
 //     </div>
 //   ),
 // };

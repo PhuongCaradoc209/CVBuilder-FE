@@ -3,7 +3,8 @@ import { useMemo } from 'react';
 import { Download, Eye, Search, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-import ModernSidebarTemplate from '@/components/cv-templates/modern-sidebar';
+// import ModernSidebarTemplate from '@/components/cv-templates/modern-sidebar';
+import ATSStandardTemplate from '@/components/cv-templates/ats-standard';
 import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
@@ -43,7 +44,7 @@ export default function CreateCvPage() {
         companyName: 'Bright Studio',
         position: 'Junior Web Developer',
         startDate: '08/2022',
-        endDate: '05/2023',
+        endDate: 'Aus 2023',
         description:
           'Delivered responsive landing pages and dashboards, integrated REST APIs, and collaborated with designers to refine spacing/typography for better readability.',
       },
@@ -100,7 +101,7 @@ export default function CreateCvPage() {
     <div className='mx-auto w-full max-w-7xl'>
       <div className='mb-8 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between'>
         <div>
-          <p className='text-primary text-xs font-semibold tracking-widest uppercase'>Resume Builder</p>
+          <p className='text-primary text-base font-semibold tracking-widest uppercase'>Resume Builder</p>
           <h1 className='text-foreground mt-2 text-4xl font-bold tracking-tight'>Build Your Resume</h1>
           <p className='text-muted-foreground mt-2'>Precision instruments for professional identity.</p>
         </div>
@@ -171,7 +172,7 @@ export default function CreateCvPage() {
           </div>
 
           <ScaledTemplatePreview>
-            <ModernSidebarTemplate
+            <ATSStandardTemplate
               info={mockInfo}
               experiences={mockExperiences}
               educations={mockEducations}
