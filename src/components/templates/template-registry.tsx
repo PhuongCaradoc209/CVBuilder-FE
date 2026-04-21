@@ -36,10 +36,46 @@ export const TEMPLATE_REGISTRY: Record<string, React.ComponentType<any>> = {
  * List of templates with human-readable labels for UI selection.
  */
 export const TEMPLATE_OPTIONS = [
-  { id: CVTemplateKey.ATS_STANDARD, name: 'ATS Standard' },
-  { id: CVTemplateKey.CLASSIC_PROFESSIONAL, name: 'Classic Professional' },
-  { id: CVTemplateKey.CORPORATE_MINIMAL, name: 'Corporate Minimal' },
-  { id: CVTemplateKey.CV_CREATIVE_BEIGE, name: 'Creative Beige' },
-  { id: CVTemplateKey.EDITORIAL_CREATIVE, name: 'Editorial Creative' },
-  { id: CVTemplateKey.MODERN_SIDEBAR, name: 'Modern Sidebar' },
+  {
+    id: CVTemplateKey.ATS_STANDARD,
+    name: 'ATS Standard',
+    category: 'Professional',
+    tags: ['Simple', 'ATS-optimized', 'Traditional'],
+    description: 'Clean, linear design optimized for Applicant Tracking Systems.',
+  },
+  {
+    id: CVTemplateKey.MODERN_SIDEBAR,
+    name: 'Modern Sidebar',
+    category: 'Creative',
+    tags: ['Two-column', 'Visual', 'Modern'],
+    description: 'Elegant two-column layout with a dedicated sidebar for contact and skills.',
+  },
+  {
+    id: CVTemplateKey.CLASSIC_PROFESSIONAL,
+    name: 'Classic Professional',
+    category: 'Professional',
+    tags: ['Conservative', 'Corporate', 'Balanced'],
+    description: 'A timeless design suitable for corporate and administrative roles.',
+  },
+  {
+    id: CVTemplateKey.CORPORATE_MINIMAL,
+    name: 'Corporate Minimal',
+    category: 'Minimalist',
+    tags: ['Clean', 'Whitespace', 'Modern'],
+    description: 'Focus on content with a subtle, high-end minimalist aesthetic.',
+  },
+  {
+    id: CVTemplateKey.CV_CREATIVE_BEIGE,
+    name: 'Creative Beige',
+    category: 'Creative',
+    tags: ['Warm', 'Stylish', 'Designer'],
+    description: 'Soft colors and unique typography for creative and design positions.',
+  },
+  {
+    id: CVTemplateKey.EDITORIAL_CREATIVE,
+    name: 'Editorial Creative',
+    category: 'Creative',
+    tags: ['Bold', 'Magazine-style', 'Impactful'],
+    description: 'High-impact design with bold headers and editorial layouts.',
+  },
 ];
