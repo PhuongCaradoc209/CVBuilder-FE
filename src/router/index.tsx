@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { type RouteObject } from 'react-router-dom';
+// import { mockCVData } from '@/components/cv-templates/modern-sidebar';
 
 import { NAV_PATH } from './router.constant';
 
@@ -13,6 +14,10 @@ const ProfilePage = lazy(() => import('@/pages/profile'));
 const MyCvsPage = lazy(() => import('@/pages/my-cvs'));
 const CreateCvPage = lazy(() => import('@/pages/create-cv'));
 const TemplatesPage = lazy(() => import('@/pages/templates'));
+// test template
+// const ModernSidebarTemplate = lazy(() => import('@/components/cv-templates/modern-sidebar'));
+// const ATSStandardTemplate = lazy(() => import('@/components/cv-templates/ats-standard'));
+// import { mockATSData } from '@/components/cv-templates/ats-standard';
 
 /**
  * Auth routes
@@ -71,4 +76,23 @@ const notFoundRoute: RouteObject = {
   element: <NotFoundPage />,
 };
 
+// const testTemplateRoute: RouteObject = {
+//   path: '/test-template',
+//   element: (
+//     <div className='flex min-h-screen items-center justify-center bg-gray-500 py-10'>
+//       <ModernSidebarTemplate data={mockCVData} />
+//     </div>
+//   ),
+// };
+
+// const testTemplateRoute: RouteObject = {
+//   path: '/test-template',
+//   element: (
+//     <div className='flex min-h-screen items-center justify-center bg-gray-500 py-10'>
+//       <ATSStandardTemplate {...mockATSData} />
+//     </div>
+//   ),
+// };
+
 export const routes: RouteObject[] = [...appRoutes, ...authRoutes, notFoundRoute];
+// export const routes: RouteObject[] = [...appRoutes, ...authRoutes, testTemplateRoute, notFoundRoute];

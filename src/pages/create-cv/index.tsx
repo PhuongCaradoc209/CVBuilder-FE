@@ -3,13 +3,13 @@ import { useMemo, useState } from 'react';
 import { Download, Eye, Plus, Search, Share2, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-import EditorialCreativeTemplate from '@/components/templates/editorial-creative-template';
 import type { Certificate, Education, Experience, Info, Language, Project, Skill, SocialLink } from '@/components/types/type';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { NAV_PATH } from '@/router/router.constant';
 import { ScaledTemplatePreview } from './components/TemplateReview';
+import ATSStandardTemplate from '@/components/cv-templates/ats-standard';
 
 const inputClassName =
   'border-border bg-muted text-foreground placeholder:text-muted-foreground h-12 rounded-xl border shadow-none';
@@ -248,9 +248,91 @@ export default function CreateCvPage() {
   );
 
   const previewEducations = useMemo(
-    () =>
-      educations.filter((item) => [item.schoolName, item.major, item.startDate, item.endDate, item.description].some(hasText)),
+    () => educations.filter((item) => [item.schoolName, item.major, item.startDate, item.endDate, item.description].some(hasText)),
     [educations],
+  );
+
+  const mockInfo: Info = useMemo(
+    () => ({
+      fullName: 'Jane Doe',
+      jobTitle: 'Frontend Developer',
+      email: 'jane.doe@example.com',
+      phone: '+84 901 234 567',
+      address: 'Ho Chi Minh City, Vietnam',
+      url: 'linkedin.com/in/janedoe',
+      imgUrl: avatarUrl?.trim() || undefined,
+      summary:
+        'Frontend developer focused on building responsive interfaces, improving performance, and turning product requirements into maintainable React applications.',
+      socialLinks: [],
+    }),
+    [avatarUrl],
+  );
+
+  const mockExperiences: Experience[] = useMemo(
+    () => [
+      {
+        companyName: 'NovaTech',
+        position: 'Frontend Developer',
+        startDate: '06/2023',
+        endDate: 'Present',
+        description:
+          'Built reusable UI components with React + Tailwind, improved Lighthouse performance from 68 → 92, and implemented form flows with validation and optimistic updates.',
+      },
+      {
+        companyName: 'Bright Studio',
+        position: 'Junior Web Developer',
+        startDate: '08/2022',
+        endDate: 'Aus 2023',
+        description:
+          'Delivered responsive landing pages and dashboards, integrated REST APIs, and collaborated with designers to refine spacing/typography for better readability.',
+      },
+    ],
+    [],
+  );
+
+  const mockEducations: Education[] = useMemo(
+    () => [
+      {
+        schoolName: 'University of Technology',
+        major: 'Bachelor of Software Engineering',
+        startDate: '2020',
+        endDate: '2024',
+        description: 'Focused on web engineering, software architecture, and human-computer interaction.',
+      },
+    ],
+    [],
+  );
+
+  const mockSkills: Skill[] = useMemo(
+    () => [
+      { skillName: 'React', level: 'Advanced' },
+      { skillName: 'TypeScript', level: 'Advanced' },
+      { skillName: 'Tailwind CSS', level: 'Advanced' },
+      { skillName: 'REST APIs', level: 'Intermediate' },
+      { skillName: 'Testing', level: 'Intermediate' },
+    ],
+    [],
+  );
+
+  const mockCertificates: Certificate[] = useMemo(
+    () => [
+      {
+        name: 'Frontend Development Certificate',
+        issuer: 'Coursera',
+        issueDate: '2024',
+        expiryDate: '',
+        url: '',
+      },
+    ],
+    [],
+  );
+
+  const mockLanguages: Language[] = useMemo(
+    () => [
+      { languageName: 'English', level: 'Professional working proficiency' },
+      { languageName: 'Vietnamese', level: 'Native' },
+    ],
+    [],
   );
 
   const previewSkills = useMemo(() => skills.filter((item) => [item.skillName, item.level].some(hasText)), [skills]);
@@ -267,11 +349,18 @@ export default function CreateCvPage() {
 
   const previewLanguages = useMemo(() => languages.filter((item) => [item.languageName, item.level].some(hasText)), [languages]);
 
+  const templateInfo = hasText(previewInfo.fullName) || hasText(previewInfo.email) || hasText(previewInfo.summary) ? previewInfo : mockInfo;
+  const templateExperiences = previewExperiences.length > 0 ? previewExperiences : mockExperiences;
+  const templateEducations = previewEducations.length > 0 ? previewEducations : mockEducations;
+  const templateSkills = previewSkills.length > 0 ? previewSkills : mockSkills;
+  const templateCertificates = previewCertificates.length > 0 ? previewCertificates : mockCertificates;
+  const templateLanguages = previewLanguages.length > 0 ? previewLanguages : mockLanguages;
+
   return (
     <div className='mx-auto w-full max-w-7xl'>
       <div className='mb-8 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between'>
         <div>
-          <p className='text-primary text-xs font-semibold tracking-widest uppercase'>Resume Builder</p>
+          <p className='text-primary text-base font-semibold tracking-widest uppercase'>Resume Builder</p>
           <h1 className='text-foreground mt-2 text-4xl font-bold tracking-tight'>Build Your Resume</h1>
           <p className='text-muted-foreground mt-2'>Precision instruments for professional identity.</p>
         </div>
@@ -843,15 +932,13 @@ export default function CreateCvPage() {
           </div>
 
           <ScaledTemplatePreview>
-            <EditorialCreativeTemplate
-              info={previewInfo}
-              experiences={previewExperiences}
-              educations={previewEducations}
-              skills={previewSkills}
-              certificates={previewCertificates}
-              languages={previewLanguages}
-              avatarUrl={avatarUrl}
-              className='w-[1152px] max-w-none'
+            <ATSStandardTemplate
+              info={templateInfo}
+              experiences={templateExperiences}
+              educations={templateEducations}
+              skills={templateSkills}
+              certificates={templateCertificates}
+              languages={templateLanguages}
             />
           </ScaledTemplatePreview>
 
