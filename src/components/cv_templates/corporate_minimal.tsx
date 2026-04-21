@@ -42,7 +42,6 @@ export default function ClassicProfessionalTemplate({
   const profileUrl = getProfileUrl(info);
 
   const nameParts = info.fullName.trim().split(/\s+/).filter(Boolean);
-  const lastName = nameParts.slice(-1)[0] ?? '';
   const firstName = nameParts.slice(0, -1).join(' ');
 
   const hasSummary = Boolean(info.summary?.trim());
