@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { useRoutes } from 'react-router-dom';
 import { routes } from './router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from '@/components/ui/sonner';
 
 function App() {
   const appRoutes = useRoutes(routes);
@@ -18,6 +19,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Suspense fallback={<div className='flex h-screen items-center justify-center'>loading...</div>}>{appRoutes}</Suspense>
+      <Toaster position='top-right' expand={false} richColors theme='light' />
     </QueryClientProvider>
   );
 }

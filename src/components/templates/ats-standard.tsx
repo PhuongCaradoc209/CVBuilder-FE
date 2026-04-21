@@ -1,5 +1,5 @@
-// import type { CVData, Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
 import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
+import { formatDate } from '@/lib/utils';
 
 export interface ATSStandardTemplateProps {
   info: Info;
@@ -85,7 +85,7 @@ export default function ATSStandardTemplate({
                   <div className='flex justify-between font-bold'>
                     <span>{exp.companyName}</span>
                     <span>
-                      {exp.startDate} {exp.endDate ? `- ${exp.endDate}` : ''}
+                      {formatDate(exp.startDate)} {exp.endDate ? `- ${formatDate(exp.endDate)}` : ''}
                     </span>
                   </div>
                   <div className='mb-1 font-bold'>{exp.position}</div>
@@ -112,7 +112,7 @@ export default function ATSStandardTemplate({
                     {edu.major && <div>{edu.schoolName}</div>}
                     {(edu.startDate || edu.endDate) && (
                       <div className='mt-0.5'>
-                        {edu.startDate} {edu.endDate ? `- ${edu.endDate}` : ''}
+                        {formatDate(edu.startDate)} {edu.endDate ? `- ${formatDate(edu.endDate)}` : ''}
                       </div>
                     )}
                     {edu.description && <p className='mt-1 leading-relaxed whitespace-pre-line'>{edu.description}</p>}
@@ -134,7 +134,7 @@ export default function ATSStandardTemplate({
                     <div>{cert.issuer}</div>
                     {(cert.issueDate || cert.expiryDate) && (
                       <div className='mt-0.5'>
-                        {cert.issueDate} {cert.expiryDate ? `- ${cert.expiryDate}` : ''}
+                        {formatDate(cert.issueDate)} {cert.expiryDate ? `- ${formatDate(cert.expiryDate)}` : ''}
                       </div>
                     )}
                   </div>

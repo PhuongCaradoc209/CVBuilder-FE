@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react';
 import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
+import { formatDate } from '@/lib/utils';
+import type { ReactNode } from 'react';
 
 export interface EditorialCreativeTemplateProps {
   info: Info;
@@ -44,7 +45,7 @@ function splitName(fullName: string) {
   };
 }
 
-export default function EditorialCreativeTemplate({
+export default function CVCreativeBeigeTemplate({
   info,
   experiences = [],
   educations = [],
@@ -117,7 +118,7 @@ export default function EditorialCreativeTemplate({
               <li key={i}>
                 <span className='font-bold'>• {edu.schoolName}</span>
                 <div className='text-[#6B5B53]'>
-                  {edu.startDate} - {edu.endDate} | {edu.major}
+                  {formatDate(edu.startDate)} - {formatDate(edu.endDate)} | {edu.major}
                 </div>
               </li>
             ))}
@@ -157,7 +158,7 @@ export default function EditorialCreativeTemplate({
                 <div key={i} className='relative'>
                   {/* BADGE */}
                   <div className='absolute left-5 -translate-x-1/2 rounded-full bg-[#3A2E2A] px-4 py-1 text-[0.85rem] text-white'>
-                    {exp.startDate}
+                    {formatDate(exp.startDate)}
                   </div>
 
                   <div className='ml-12'>
@@ -181,7 +182,7 @@ export default function EditorialCreativeTemplate({
               <div key={i} className='mb-4'>
                 <p className='text-[1rem] font-bold'>{c.name}</p>
                 <p className='text-[0.95rem] text-[#6B5B53]'>
-                  {c.issuer} · {c.issueDate}
+                  {c.issuer} · {formatDate(c.issueDate)}
                 </p>
               </div>
             ))}
