@@ -64,7 +64,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
             <div key={i} className='flex gap-2'>
               <GraduationCapIcon size={38} color='#F5824A' className='mt-3.5 rounded-md border border-none bg-orange-100 p-2' />
               <div>
-                <p className='mt-2 font-medium'>{edu.degree}</p>
+                <p className='mt-2.5 font-medium'>{edu.degree}</p>
                 <p className='text-muted-foreground text-sm'>{edu.school}</p>
               </div>
             </div>

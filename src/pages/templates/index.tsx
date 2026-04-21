@@ -2,17 +2,19 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { CommandIcon } from '@phosphor-icons/react';
+import modernSidebarImg from '@/assets/templates/modern-sidebar.jpeg';
+import atsStandardImg from '@/assets/templates/ats-standard.jpeg';
 
 const templates = [
   {
     title: 'Modern Sidebar',
     tags: ['Professional', 'Two-column'],
-    image: 'https://tse4.mm.bing.net/th/id/OIP.pU0aNhi8bY5nJWvPtxBmzgHaKe?rs=1&pid=ImgDetMain&o=7&rm=3',
+    image: modernSidebarImg,
   },
   {
     title: 'ATS Standard',
     tags: ['Simple', 'Professional'],
-    image: 'img2.png',
+    image: atsStandardImg,
   },
   {
     title: 'Creative Spark',
@@ -51,7 +53,7 @@ export default function TemplatesPage() {
       {/* HERO */}
       <div>
         <p className='mb-2 font-medium text-orange-400'>CURATED COLLECTION</p>
-        <h1 className='text-4xl font-semibold'>Explore CV Templates</h1>
+        <h1 className='text-4xl font-bold'>Explore CV Templates</h1>
         <p className='text-muted-foreground mt-2 max-w-xl'>
           Find the perfect design for your dream job. Each template is meticulously crafted to pass ATS filters and impress hiring
           managers.
