@@ -1,4 +1,5 @@
 import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
+import { formatDate } from '@/lib/utils';
 
 export interface ModernSidebarTemplateProps {
   info: Info;
@@ -66,7 +67,7 @@ export default function ModernSidebarTemplate({
               {certificates.map((cert, index) => (
                 <div key={index}>
                   <p className='text-base text-gray-700'>
-                    {cert.issueDate} | {cert.issuer}
+                    {formatDate(cert.issueDate)} | {cert.issuer}
                   </p>
                   <p className='font-semibold'>{cert.name}</p>
                 </div>
@@ -127,7 +128,7 @@ export default function ModernSidebarTemplate({
                 <div className='flex justify-between text-lg font-bold text-black/85'>
                   <h3>{exp.position}</h3>
                   <span>
-                    {exp.startDate} - {exp.endDate}
+                    {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
                   </span>
                 </div>
                 <p className='text-md mb-1.5 font-bold text-black/85'>{exp.companyName}</p>
@@ -147,7 +148,7 @@ export default function ModernSidebarTemplate({
                 <div className='flex justify-between text-lg font-bold text-black/85'>
                   <h3>{edu.major}</h3>
                   <span>
-                    {edu.startDate} - {edu.endDate}
+                    {formatDate(edu.startDate)} - {formatDate(edu.endDate)}
                   </span>
                 </div>
                 <p className='text-md mb-1.5 font-bold text-black/85'>{edu.schoolName}</p>

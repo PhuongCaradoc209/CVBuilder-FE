@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
+import { formatDate } from '@/lib/utils';
 
 export interface EditorialCreativeTemplateProps {
   info: Info;
@@ -138,7 +139,7 @@ export default function EditorialCreativeTemplate({
                         </div>
 
                         <span className='text-muted-foreground text-lg font-medium'>
-                          {experience.startDate} - {experience.endDate}
+                          {formatDate(experience.startDate)} - {formatDate(experience.endDate)}
                         </span>
                       </div>
 
@@ -167,7 +168,7 @@ export default function EditorialCreativeTemplate({
                         </div>
 
                         <span className='text-muted-foreground text-lg font-medium'>
-                          {education.startDate} - {education.endDate}
+                          {formatDate(education.startDate)} - {formatDate(education.endDate)}
                         </span>
                       </div>
 
@@ -195,7 +196,7 @@ export default function EditorialCreativeTemplate({
                         {certificate.url && <p className='text-primary mt-1 text-sm break-all'>{certificate.url}</p>}
                       </div>
 
-                      <span className='text-muted-foreground text-lg font-medium'>{certificate.issueDate}</span>
+                      <span className='text-muted-foreground text-lg font-medium'>{formatDate(certificate.issueDate)}</span>
                     </div>
                   ))}
                 </div>

@@ -31,6 +31,7 @@ export function CVGrid({ cvs }: CVGridProps) {
       {cvs.map((cv) => (
         <CVCard
           key={cv.id}
+          id={cv.id}
           title={cv.title}
           status={cv.status}
           lastEdited={cv.lastEdited}

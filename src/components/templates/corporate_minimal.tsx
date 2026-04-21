@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
+import { formatDate } from '@/lib/utils';
 
 export interface ClassicProfessionalTemplateProps {
   info: Info;
@@ -30,7 +31,7 @@ function getProfileUrl(info: Info) {
 
 // ─── Template ─────────────────────────────────────────────────────────────────
 
-export default function ClassicProfessionalTemplate({
+export default function CorporateMinimalTemplate({
   info,
   experiences = [],
   educations = [],
@@ -97,7 +98,7 @@ export default function ClassicProfessionalTemplate({
                 {educations.map((edu, i) => (
                   <div key={i}>
                     <p className='font-semibold text-[#333]'>
-                      {edu.startDate} - {edu.endDate}
+                      {formatDate(edu.startDate)} - {formatDate(edu.endDate)}
                     </p>
                     <p className='font-bold text-[#333] uppercase'>{edu.schoolName}</p>
                     <p className='text-[#666]'>{edu.major}</p>
@@ -154,7 +155,7 @@ export default function ClassicProfessionalTemplate({
                         <p className='text-[#555]'>{exp.position}</p>
                       </div>
                       <span className='whitespace-nowrap text-[#777]'>
-                        {exp.startDate} - {exp.endDate}
+                        {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
                       </span>
                     </div>
 
@@ -177,7 +178,7 @@ export default function ClassicProfessionalTemplate({
                   <div key={i}>
                     <p className='font-bold text-[#333]'>{cert.name}</p>
                     <p className='text-[#666]'>
-                      {cert.issuer} · {cert.issueDate}
+                      {cert.issuer} · {formatDate(cert.issueDate)}
                     </p>
                   </div>
                 ))}
