@@ -4,10 +4,44 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
 import GithubIcon from '@/icon/githubIcon';
 import GoogleIcon from '@/icon/googleIcon';
+import { authService } from '@/services/auth.service';
 import { CheckCircleIcon, EnvelopeIcon, FileTextIcon, LightningIcon, LockKeyIcon } from '@phosphor-icons/react';
-import { Link } from 'react-router';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router';
 
 function LoginPage() {
+  const backendUrl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${backendUrl}/auth/google`;
+  };
+  const handleGithubLogin = () => {
+    window.location.href = `${backendUrl}/auth/github`;
+  };
+  const loginMutation = useMutation({
+    mutationFn: authService.login,
+    onSuccess: (data: any) => {
+      localStorage.setItem('access_token', data.accessToken);
+      navigate('/');
+    },
+    onError: (error: any) => {
+      console.log(error);
+      alert(error.response?.data?.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại!');
+    },
+  });
+
+  const handleLogin = () => {
+    if (!email || !password) {
+      alert('Vui lòng nhập đầy đủ Email và Password!');
+      return;
+    }
+    // Gọi API
+    loginMutation.mutate({ email, password });
+  };
   return (
     <main className='flex h-screen w-full'>
       {/* LEFT - ORANGE */}
@@ -84,11 +118,15 @@ function LoginPage() {
 
           {/*Social Login*/}
           <div className='mb-6 flex gap-4'>
-            <Button className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-gray-100'>
+            <Button
+              onClick={handleGoogleLogin}
+              className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-gray-100'>
               <GoogleIcon />
               <span className='text-base font-semibold text-gray-700'>Google</span>
             </Button>
-            <Button className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-gray-100'>
+            <Button
+              onClick={handleGithubLogin}
+              className='flex-1 rounded-full border border-gray-400 bg-white py-6 hover:bg-gray-100'>
               <GithubIcon />
               <span className='text-base font-semibold text-gray-700'>Github</span>
             </Button>
@@ -109,6 +147,7 @@ function LoginPage() {
                 icon={<EnvelopeIcon className='absolute left-4 text-gray-400' weight='light' size={24} />}
                 placeholder='name@career.com'
                 type='email'
+                onChange={(e: any) => setEmail(e.target.value)}
               />
 
               <InputField
@@ -118,6 +157,7 @@ function LoginPage() {
                 icon={<LockKeyIcon className='absolute left-4 text-gray-400' weight='light' size={24} />}
                 placeholder='Enter your password'
                 type='password'
+                onChange={(e: any) => setPassword(e.target.value)}
               />
 
               <Field orientation='horizontal'>
@@ -134,7 +174,9 @@ function LoginPage() {
           </FieldSet>
 
           {/* Button */}
-          <Button className='w-full rounded-full bg-orange-500 py-6 text-base font-semibold text-white hover:bg-orange-500/80'>
+          <Button
+            onClick={handleLogin}
+            className='w-full rounded-full bg-orange-500 py-6 text-base font-semibold text-white hover:bg-orange-500/80'>
             Sign In to Dashboard
           </Button>
 

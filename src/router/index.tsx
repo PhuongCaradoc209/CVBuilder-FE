@@ -6,6 +6,7 @@ import { NAV_PATH } from './router.constant';
 
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage'));
+const LoginSuccessPage = lazy(() => import('@/pages/auth/LoginSuccessPage'));
 const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
 const NotFoundPage = lazy(() => import('@/pages/not-found'));
 
@@ -30,6 +31,10 @@ const authRoutes: RouteObject[] = [
   {
     path: NAV_PATH.AUTH.REGISTER,
     element: <RegisterPage />,
+  },
+  {
+    path: NAV_PATH.AUTH.LOGIN_SUCCESS,
+    element: <LoginSuccessPage />,
   },
 ];
 
