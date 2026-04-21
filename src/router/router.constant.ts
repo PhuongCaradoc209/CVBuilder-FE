@@ -4,6 +4,7 @@ export const NAV_PATH = {
   AUTH: {
     LOGIN: '/login',
     REGISTER: '/register',
+    LOGIN_SUCCESS: '/login-success',
   },
   APP: {
     MY_CVS: '/my-cvs',

@@ -4,14 +4,44 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import { Lock, Mail, User } from 'lucide-react';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { authService } from '@/services/auth.service';
 
 export default function RegisterForm() {
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmedPassword, setConfirmedPassword] = useState('');
+
+  const loginMutation = useMutation({
+    mutationFn: authService.register,
+    onSuccess: () => {
+      navigate('/login');
+    },
+    onError: (error: any) => {
+      console.log(error);
+      alert(error.response?.data?.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại!');
+    },
+  });
+
+  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Register submitted');
+    if (!email || !password || !fullName) {
+      alert('Vui lòng điền đầy đủ thông tin!');
+      return;
+    }
+
+    if (password !== confirmedPassword) {
+      alert('Password and Confirm Password do not match!');
+      return;
+    }
+    // Gọi API
+    loginMutation.mutate({ email, password, fullName });
   };
 
   return (
@@ -23,7 +53,7 @@ export default function RegisterForm() {
         <p className='mt-2 text-gray-500'>Start building your professional future today.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className='space-y-6'>
+      <form onSubmit={handleRegister} className='space-y-6'>
         {/* SOCIAL LOGIN */}
         <div className='flex gap-4'>
           <Button type='button' variant='outline' className='flex flex-1 items-center justify-center gap-2'>
@@ -53,7 +83,7 @@ export default function RegisterForm() {
           <div className='relative'>
             <User className='absolute top-3.5 left-3 h-4 w-4 text-gray-400' />
 
-            <Input placeholder='John Doe' className='pl-10' />
+            <Input onChange={(e: any) => setFullName(e.target.value)} placeholder='John Doe' className='pl-10' />
           </div>
         </div>
 
@@ -64,7 +94,12 @@ export default function RegisterForm() {
           <div className='relative'>
             <Mail className='absolute top-3.5 left-3 h-4 w-4 text-gray-400' />
 
-            <Input type='email' placeholder='name@company.com' className='pl-10' />
+            <Input
+              onChange={(e: any) => setEmail(e.target.value)}
+              type='email'
+              placeholder='name@company.com'
+              className='pl-10'
+            />
           </div>
         </div>
 
@@ -75,7 +110,12 @@ export default function RegisterForm() {
           <div className='relative'>
             <Lock className='absolute top-3.5 left-3 h-4 w-4 text-gray-400' />
 
-            <Input type='password' placeholder='Min. 8 characters' className='pl-10' />
+            <Input
+              onChange={(e: any) => setPassword(e.target.value)}
+              type='password'
+              placeholder='Min. 8 characters'
+              className='pl-10'
+            />
           </div>
         </div>
 
@@ -86,7 +126,12 @@ export default function RegisterForm() {
           <div className='relative'>
             <Lock className='absolute top-3.5 left-3 h-4 w-4 text-gray-400' />
 
-            <Input type='password' placeholder='Repeat password' className='pl-10' />
+            <Input
+              onChange={(e: any) => setConfirmedPassword(e.target.value)}
+              type='password'
+              placeholder='Repeat password'
+              className='pl-10'
+            />
           </div>
         </div>
 
