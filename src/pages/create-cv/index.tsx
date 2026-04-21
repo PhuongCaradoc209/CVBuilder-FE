@@ -10,6 +10,8 @@ import { Input } from '@/components/ui/input';
 import { NAV_PATH } from '@/router/router.constant';
 import { ScaledTemplatePreview } from './components/TemplateReview';
 import ATSStandardTemplate from '@/components/cv-templates/ats-standard';
+import CorporateMinimal from '@/components/cv_templates/corporate_minimal';
+import CVCreativeBeige from '@/components/cv_templates/cv_creative_beige';
 
 const inputClassName =
   'border-border bg-muted text-foreground placeholder:text-muted-foreground h-12 rounded-xl border shadow-none';
@@ -76,6 +78,14 @@ const emptyInfo: Info = {
 
 type InfoTextField = 'fullName' | 'jobTitle' | 'email' | 'phone' | 'address' | 'url' | 'summary';
 
+type TemplateKey = 'cv_creative_beige' | 'corporate_minimal' | 'ats-standard';
+
+const TEMPLATE_TABS: { key: TemplateKey; label: string }[] = [
+  { key: 'cv_creative_beige', label: 'Creative Beige' },
+  { key: 'corporate_minimal', label: 'Corporate Minimal' },
+  { key: 'ats-standard', label: 'ATS Standard' },
+];
+
 function hasText(value?: string) {
   return Boolean(value?.trim());
 }
@@ -138,6 +148,8 @@ function EntryCard({
 export default function CreateCvPage() {
   const [cvTitle, setCvTitle] = useState('Untitled CV');
   const [status, setStatus] = useState('draft');
+
+  const [activeTemplate, setActiveTemplate] = useState<TemplateKey>('cv_creative_beige');
 
   const [info, setInfo] = useState<Info>(emptyInfo);
   const [experiences, setExperiences] = useState<Experience[]>([emptyExperience()]);
@@ -248,7 +260,8 @@ export default function CreateCvPage() {
   );
 
   const previewEducations = useMemo(
-    () => educations.filter((item) => [item.schoolName, item.major, item.startDate, item.endDate, item.description].some(hasText)),
+    () =>
+      educations.filter((item) => [item.schoolName, item.major, item.startDate, item.endDate, item.description].some(hasText)),
     [educations],
   );
 
@@ -349,12 +362,22 @@ export default function CreateCvPage() {
 
   const previewLanguages = useMemo(() => languages.filter((item) => [item.languageName, item.level].some(hasText)), [languages]);
 
-  const templateInfo = hasText(previewInfo.fullName) || hasText(previewInfo.email) || hasText(previewInfo.summary) ? previewInfo : mockInfo;
+  const templateInfo =
+    hasText(previewInfo.fullName) || hasText(previewInfo.email) || hasText(previewInfo.summary) ? previewInfo : mockInfo;
   const templateExperiences = previewExperiences.length > 0 ? previewExperiences : mockExperiences;
   const templateEducations = previewEducations.length > 0 ? previewEducations : mockEducations;
   const templateSkills = previewSkills.length > 0 ? previewSkills : mockSkills;
   const templateCertificates = previewCertificates.length > 0 ? previewCertificates : mockCertificates;
   const templateLanguages = previewLanguages.length > 0 ? previewLanguages : mockLanguages;
+
+  const sharedProps = {
+    info: templateInfo,
+    experiences: templateExperiences,
+    educations: templateEducations,
+    skills: templateSkills,
+    certificates: templateCertificates,
+    languages: templateLanguages,
+  };
 
   return (
     <div className='mx-auto w-full max-w-7xl'>
@@ -931,15 +954,27 @@ export default function CreateCvPage() {
             <Download className='text-muted-foreground h-4 w-4' />
           </div>
 
+          <div className='border-border bg-background mb-4 flex overflow-hidden rounded-xl border'>
+            {TEMPLATE_TABS.map(({ key, label }) => (
+              <button
+                key={key}
+                type='button'
+                onClick={() => setActiveTemplate(key)}
+                className={[
+                  'flex-1 py-2 text-xs font-semibold transition-colors',
+                  activeTemplate === key ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground',
+                ].join(' ')}>
+                {label}
+              </button>
+            ))}
+          </div>
+
           <ScaledTemplatePreview>
-            <ATSStandardTemplate
-              info={templateInfo}
-              experiences={templateExperiences}
-              educations={templateEducations}
-              skills={templateSkills}
-              certificates={templateCertificates}
-              languages={templateLanguages}
-            />
+            {activeTemplate === 'cv_creative_beige' && <CVCreativeBeige {...sharedProps} />}
+
+            {activeTemplate === 'corporate_minimal' && <CorporateMinimal {...sharedProps} />}
+
+            {activeTemplate === 'ats-standard' && <ATSStandardTemplate {...sharedProps} />}
           </ScaledTemplatePreview>
 
           {previewProjects.length > 0 && (
