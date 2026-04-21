@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -45,6 +46,11 @@
     --radius-3xl: calc(var(--radius) + 12px);
     --radius-4xl: calc(var(--radius) + 16px);
     --color-gray-400: var(--gray-400);
+    --color-ec-bg:      var(--ec-bg);
+    --color-ec-dark:    var(--ec-dark);
+    --color-ec-mid:     var(--ec-mid);
+    --color-ec-light:   var(--ec-light);
+    --color-ec-accent:  var(--ec-accent);
 }
 
 :root {
@@ -81,6 +87,11 @@
     --sidebar-border: oklch(0.92 0.02 55);
     --sidebar-ring: oklch(0.646 0.222 41.116);
     --gray-400: #64758B;
+    --ec-bg:        #f5ede3;  
+    --ec-dark:      #3b2a1a;   
+    --ec-mid:       #7c5c3e;   
+    --ec-light:     #c9b49a;   
+    --ec-accent:    #a07850;   
 }
 
 .dark {
