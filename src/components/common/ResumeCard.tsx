@@ -4,16 +4,21 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 interface ResumeCardProps {
+  id: string;
   title: string;
   updated: string;
   template: string;
   image: string;
   isStarred: boolean;
+  onClick?: () => void;
+  onDelete?: (e: React.MouseEvent) => void;
 }
 
-const ResumeCard: React.FC<ResumeCardProps> = ({ title, updated, template, image, isStarred }) => {
+const ResumeCard: React.FC<ResumeCardProps> = ({ title, updated, template, image, isStarred, onClick, onDelete }) => {
   return (
-    <Card className='group bg-card flex flex-col overflow-hidden rounded-[32px] border shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl'>
+    <Card
+      onClick={onClick}
+      className='group bg-card flex cursor-pointer flex-col overflow-hidden rounded-[32px] border shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl'>
       <div className='bg-secondary relative aspect-[16/9] overflow-hidden'>
         <img
           src={image}
@@ -46,6 +51,10 @@ const ResumeCard: React.FC<ResumeCardProps> = ({ title, updated, template, image
           </Button>
           <Button
             variant='outline'
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete?.(e);
+            }}
             className='hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive flex h-[50px] items-center justify-center gap-2 rounded-xl text-[15px] font-bold text-gray-400 transition-all active:scale-95'>
             <Trash2 size={18} strokeWidth={2.5} /> Delete
           </Button>
