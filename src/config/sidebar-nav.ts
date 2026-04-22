@@ -1,4 +1,4 @@
-import { LayoutDashboard, FileText, FolderOpen, User, Settings, type LucideIcon } from 'lucide-react';
+import { LayoutDashboard, FileText, FolderOpen, User, type LucideIcon } from 'lucide-react';
 import { NAV_PATH } from '@/router/router.constant';
 
 export interface NavItem {
@@ -40,11 +40,6 @@ export const sidebarNavConfig: NavGroup[] = [
         title: 'Profile',
         path: NAV_PATH.APP.PROFILE,
         icon: User,
-      },
-      {
-        title: 'Settings',
-        path: NAV_PATH.APP.SETTINGS,
-        icon: Settings,
       },
     ],
   },

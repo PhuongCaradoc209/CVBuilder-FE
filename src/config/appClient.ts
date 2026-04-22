@@ -22,9 +22,11 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response.data, // Chỉ trả về data để code ở tầng trên gọn hơn
   (error: AxiosError) => {
-    if (error.response?.status === 401) {
+    console.log('API Error:', error.response);
+    if (error.response?.status === 401 && (error.response.data as any)?.message !== 'Incorrect current password') {
       // Logic Logout hoặc Refresh Token ở đây
-      console.error('Unauthorized! Redirecting to login...');
+      window.localStorage.removeItem('access_token');
+      window.location.href = '/login'; // Redirect về trang login
     }
     return Promise.reject(error);
   },

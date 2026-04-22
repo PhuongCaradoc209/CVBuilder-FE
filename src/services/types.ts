@@ -103,3 +103,22 @@ export interface CVCreateInput {
 }
 
 export interface CVUpdateInput extends Partial<Omit<CV, '_id' | 'userId' | 'createdAt' | 'updatedAt' | '__v'>> {}
+
+export interface InfoResponse {
+  fullName: string;
+  jobTitle: string;
+  email: string;
+  phone: string;
+  address: string;
+  url?: string;
+  imgUrl?: string;
+  summary: string;
+  socialLinks?: SocialLink[];
+  gender?: string;
+  experiences: Experience[];
+  educations: Education[];
+  website?: string;
+  birthday?: string;
+  avatarUrl?: string;
+  avatarPublicId?: string;
+}

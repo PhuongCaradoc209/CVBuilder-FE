@@ -12,6 +12,5 @@ export const NAV_PATH = {
     EDIT_CV: '/edit-cv/:id',
     TEMPLATES: '/templates',
     PROFILE: '/profile',
-    SETTINGS: '/settings',
   },
 } as const;
