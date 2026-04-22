@@ -1,14 +1,9 @@
+import type { InfoResponse } from '@/services/types';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { IdentificationCardIcon } from '@phosphor-icons/react';
 
-interface ContactUser {
-  phone: string;
-  email: string;
-  website?: string;
-}
-
 interface ContactCardProps {
-  user: ContactUser;
+  user: InfoResponse;
 }
 
 export function ContactCard({ user }: ContactCardProps) {

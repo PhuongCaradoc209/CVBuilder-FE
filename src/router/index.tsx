@@ -70,10 +70,6 @@ const appRoutes: RouteObject[] = [
         path: NAV_PATH.APP.PROFILE,
         element: <ProfilePage />,
       },
-      {
-        path: NAV_PATH.APP.SETTINGS,
-        element: <div className='text-slate-900'>Settings Page</div>,
-      },
     ],
   },
 ];

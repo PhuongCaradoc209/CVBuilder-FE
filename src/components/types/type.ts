@@ -13,6 +13,9 @@ export interface Info {
   imgUrl?: string;
   summary: string;
   socialLinks?: SocialLink[];
+  gender?: string;
+  experiences: Experience[];
+  education: Education[];
 }
 
 export interface Experience {
