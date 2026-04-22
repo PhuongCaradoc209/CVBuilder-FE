@@ -20,9 +20,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ScrollToTop />
-      <Suspense fallback={<div className='flex h-screen items-center justify-center'>loading...</div>}>
-        {appRoutes}
-      </Suspense>
+      <Suspense fallback={<div className='flex h-screen items-center justify-center'>loading...</div>}>{appRoutes}</Suspense>
       <Toaster position='top-right' expand={false} richColors theme='light' />
     </QueryClientProvider>
   );

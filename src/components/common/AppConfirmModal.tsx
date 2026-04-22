@@ -1,11 +1,4 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
 interface AppConfirmModalProps {
@@ -17,14 +10,7 @@ interface AppConfirmModalProps {
   isLoading?: boolean;
 }
 
-export function AppConfirmModal({
-  open,
-  onOpenChange,
-  title,
-  description,
-  onConfirm,
-  isLoading,
-}: AppConfirmModalProps) {
+export function AppConfirmModal({ open, onOpenChange, title, description, onConfirm, isLoading }: AppConfirmModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>

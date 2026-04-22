@@ -180,7 +180,7 @@ const DashboardPage = () => {
           <h2 className='text-[28px] font-bold tracking-tight text-neutral-900'>Recent Resumes</h2>
           <button
             onClick={() => navigate(NAV_PATH.APP.MY_CVS)}
-            className='text-primary text-[17px] font-semibold cursor-pointer transition-opacity hover:opacity-80'>
+            className='text-primary cursor-pointer text-[17px] font-semibold transition-opacity hover:opacity-80'>
             View All &gt;
           </button>
         </div>
@@ -198,9 +198,7 @@ const DashboardPage = () => {
                 title={resume.cvTitle}
                 updated={`Updated ${new Date(resume.updatedAt).toLocaleDateString()}`}
                 template={resume.templateId === 'ats-standard' ? 'ATS Standard' : 'Modern Sidebar'}
-                image={
-                  resume.templateId === 'ats-standard' ? '/src/assets/Background.png' : '/src/assets/Background (1).png'
-                }
+                image={resume.templateId === 'ats-standard' ? '/src/assets/Background.png' : '/src/assets/Background (1).png'}
                 isStarred={false}
                 onClick={() => handleEditCV(resume._id)}
                 onDelete={() => handleDeleteCV(resume._id)}
@@ -211,9 +209,7 @@ const DashboardPage = () => {
           <div className='bg-muted/50 flex flex-col items-center justify-center rounded-[40px] py-20'>
             <FileText className='mb-4 h-12 w-12 text-gray-300' />
             <p className='text-gray-400'>No resumes found yet. Create your first one!</p>
-            <button
-              onClick={handleCreateNew}
-              className='text-primary mt-2 font-semibold hover:underline'>
+            <button onClick={handleCreateNew} className='text-primary mt-2 font-semibold hover:underline'>
               Create New CV
             </button>
           </div>
