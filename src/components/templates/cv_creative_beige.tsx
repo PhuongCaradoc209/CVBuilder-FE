@@ -57,7 +57,7 @@ export default function CVCreativeBeigeTemplate({
   const { firstName, lastName } = splitName(info.fullName);
 
   return (
-    <div className={['mx-auto w-full max-w-[900px] rounded-xl bg-[#F4EDE7] p-10 shadow-2xl', className].join(' ')}>
+    <div className={['mx-auto w-full max-w-[1000px] rounded-xl bg-[#F4EDE7] p-10 shadow-2xl', className].join(' ')}>
       {/* HEADER */}
       <div className='grid grid-cols-[1fr_2fr] items-start gap-12'>
         {/* IMAGE */}
@@ -97,11 +97,11 @@ export default function CVCreativeBeigeTemplate({
               <p>{info.email}</p>
             </div>
             <div>
-              <p className='font-bold italic'>Điện thoại</p>
+              <p className='font-bold italic'>Phone</p>
               <p>{info.phone}</p>
             </div>
             <div>
-              <p className='font-bold italic'>Địa chỉ</p>
+              <p className='font-bold italic'>Address</p>
               <p>{info.address}</p>
             </div>
           </div>
@@ -112,7 +112,7 @@ export default function CVCreativeBeigeTemplate({
       <div className='mt-14 grid grid-cols-[1fr_1.6fr] gap-14'>
         {/* LEFT */}
         <div>
-          <SectionLabel>Học vấn</SectionLabel>
+          <SectionLabel>Education</SectionLabel>
           <ul className='space-y-4 text-[1rem]'>
             {educations.map((edu, i) => (
               <li key={i}>
@@ -125,7 +125,7 @@ export default function CVCreativeBeigeTemplate({
           </ul>
 
           <div className='mt-10'>
-            <SectionLabel>Kỹ năng</SectionLabel>
+            <SectionLabel>Skills</SectionLabel>
             <ul className='space-y-2 text-[1rem]'>
               {skills.map((s, i) => (
                 <li key={i}>• {s.skillName}</li>
@@ -134,7 +134,7 @@ export default function CVCreativeBeigeTemplate({
           </div>
 
           <div className='mt-10'>
-            <SectionLabel>Ngôn ngữ</SectionLabel>
+            <SectionLabel>Languages</SectionLabel>
             <ul className='space-y-2 text-[1rem]'>
               {languages.map((l, i) => (
                 <li key={i}>
@@ -147,7 +147,7 @@ export default function CVCreativeBeigeTemplate({
 
         {/* RIGHT */}
         <div>
-          <SectionLabel>Kinh nghiệm</SectionLabel>
+          <SectionLabel>Experience</SectionLabel>
 
           <div className='relative pl-12'>
             {/* TIMELINE */}
@@ -161,7 +161,7 @@ export default function CVCreativeBeigeTemplate({
                     {formatDate(exp.startDate)}
                   </div>
 
-                  <div className='ml-12'>
+                  <div className='ml-18'>
                     <p className='text-[1.1rem] font-bold'>{exp.companyName}</p>
                     <p className='font-semibold text-[#6B5B53]'>{exp.position}</p>
 
@@ -177,7 +177,7 @@ export default function CVCreativeBeigeTemplate({
           </div>
 
           <div className='mt-12'>
-            <SectionLabel>Chứng chỉ</SectionLabel>
+            <SectionLabel>Certifications</SectionLabel>
             {certificates.map((c, i) => (
               <div key={i} className='mb-4'>
                 <p className='text-[1rem] font-bold'>{c.name}</p>

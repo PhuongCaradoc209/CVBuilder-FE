@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toPng } from 'html-to-image';
 import jsPDF from 'jspdf';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -15,7 +15,9 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { NAV_PATH } from '@/router/router.constant';
 import { cvService } from '@/services/cv.service';
+import { userService } from '@/services/user.service';
 import type { CV } from '@/services/types';
+import { formatDateForInput } from '@/utils/date';
 import {
   CertificationSection,
   EducationSection,
@@ -133,6 +135,13 @@ export function CVEditor({ id }: CVEditorProps) {
   const cvRef = useRef<HTMLDivElement>(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
+  const { data: profileData } = useQuery({
+    queryKey: ['userProfile'],
+    queryFn: userService.getProfile,
+    enabled: !id,
+    select: (res: any) => res?.user,
+  });
+
   const methods = useForm<CV>({
     defaultValues: { ...defaultValues, templateId: templateFromQuery || defaultValues.templateId } as any,
   });
@@ -150,19 +159,60 @@ export function CVEditor({ id }: CVEditorProps) {
           reset(res.data);
         }
       });
+    } else if (profileData) {
+      // Map profile data to CV format
+      const mappedData: Partial<CV> = {
+        ...defaultValues,
+        templateId: templateFromQuery || defaultValues.templateId,
+        personalInfo: {
+          ...defaultValues.personalInfo,
+          fullName: profileData.fullName || '',
+          email: profileData.email || '',
+          phone: profileData.phone !== 'Not provided' ? profileData.phone : '',
+          jobTitle: profileData.jobTitle !== 'Not provided' ? profileData.jobTitle : '',
+          address: profileData.address !== 'Not provided' ? profileData.address : '',
+          summary: profileData.summary !== 'Not provided' ? profileData.summary : '',
+          imgUrl: profileData.avatarUrl || profileData.imgUrl || '',
+          socialLinks: profileData.website
+            ? [{ platform: 'Website', url: profileData.website }]
+            : defaultValues.personalInfo?.socialLinks,
+        },
+        experiences:
+          profileData.experiences?.map((exp: any) => ({
+            companyName: exp.companyName || '',
+            position: exp.position || '',
+            startDate: formatDateForInput(exp.startDate),
+            endDate: formatDateForInput(exp.endDate),
+            description: exp.description || '',
+          })) || [],
+        educations:
+          profileData.educations?.map((edu: any) => ({
+            schoolName: edu.schoolName || '',
+            major: edu.major || '',
+            startDate: formatDateForInput(edu.startDate),
+            endDate: formatDateForInput(edu.endDate),
+            description: edu.description || '',
+          })) || [],
+      };
+      reset(mappedData as any);
     } else {
-      // If creating new, and template is in query, update it
+      // Fallback if no profile data or while loading
       if (templateFromQuery) {
         setValue('templateId', templateFromQuery);
       } else {
         reset(defaultValues as any);
       }
     }
-  }, [id, reset, templateFromQuery, setValue]);
+  }, [id, reset, templateFromQuery, setValue, profileData]);
 
   // Mutations
   const saveMutation = useMutation({
-    mutationFn: (data: CV) => (id ? cvService.update(id, data) : cvService.create(data)),
+    mutationFn: (data: CV) => {
+      if (id) {
+        return cvService.update(id, { ...data, status: 'completed' });
+      }
+      return cvService.create(data);
+    },
     onSuccess: (res) => {
       if (res.success) {
         toast.success(id ? 'CV updated successfully!' : 'CV created successfully!');
@@ -231,7 +281,8 @@ export function CVEditor({ id }: CVEditorProps) {
     const hasInfo = formData.personalInfo?.fullName || formData.personalInfo?.email;
 
     return {
-      info: hasInfo ? { ...formData.personalInfo, imgUrl: '' } : mockData.personalInfo,
+      info: hasInfo ? formData.personalInfo : mockData.personalInfo,
+      avatarUrl: formData.personalInfo?.imgUrl || '',
       experiences: formData.experiences?.length ? formData.experiences : mockData.experiences,
       educations: formData.educations?.length ? formData.educations : mockData.educations,
       skills: formData.skills?.length ? formData.skills : mockData.skills,
@@ -300,6 +351,7 @@ export function CVEditor({ id }: CVEditorProps) {
                           <SelectItem value='draft'>draft</SelectItem>
                           <SelectItem value='published'>published</SelectItem>
                           <SelectItem value='private'>private</SelectItem>
+                          <SelectItem value='completed'>completed</SelectItem>
                         </SelectContent>
                       </Select>
                     )}
@@ -375,7 +427,9 @@ export function CVEditor({ id }: CVEditorProps) {
             <div className='mb-6 flex flex-wrap items-center justify-between gap-4'>
               <div className='bg-card flex items-center gap-3 rounded-full px-4 py-2 shadow-sm'>
                 <Search className='text-muted-foreground h-4 w-4' />
-                <span className='text-foreground text-sm font-medium'>{formData.status}</span>
+                <span className={`text-sm font-medium ${formData.status === 'completed' ? 'text-green-600' : 'text-foreground'}`}>
+                  {formData.status}
+                </span>
                 <Share2 className='text-muted-foreground h-4 w-4' />
                 <Eye className='text-muted-foreground h-4 w-4' />
                 <Download className='text-muted-foreground h-4 w-4' />
