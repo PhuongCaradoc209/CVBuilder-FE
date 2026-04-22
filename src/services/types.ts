@@ -121,7 +121,8 @@ export interface InfoResponse {
   birthday?: string;
   avatarUrl?: string;
   avatarPublicId?: string;
-  
+}
+
 export interface AISuggestRequest {
   section: string;
   draftText: string;
