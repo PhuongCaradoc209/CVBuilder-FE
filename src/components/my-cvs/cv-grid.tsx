@@ -3,7 +3,7 @@ import { CVCard, type PreviewStyle } from './cv-card';
 export interface CV {
   id: string;
   title: string;
-  status: 'DRAFT' | 'FINAL';
+  status: 'DRAFT' | 'FINAL' | 'COMPLETED';
   lastEdited: string;
   rating: number;
   tag: 'work' | 'freelance' | 'personal';

@@ -41,7 +41,7 @@ export default function MyCvsPage() {
       return {
         id: item._id,
         title: item.cvTitle || 'Untitled CV',
-        status: (item.status?.toUpperCase() as 'DRAFT' | 'FINAL') || 'DRAFT',
+        status: (item.status?.toUpperCase() as 'DRAFT' | 'FINAL' | 'COMPLETED') || 'DRAFT',
         lastEdited: formatDistanceToNow(updatedAt, { addSuffix: true }),
         rating: 5,
         tag: TAGS[index % TAGS.length],

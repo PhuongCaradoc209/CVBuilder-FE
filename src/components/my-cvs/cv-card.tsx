@@ -22,11 +22,17 @@ type PreviewStyle = 'orange' | 'paper' | 'dark' | 'beige' | 'navy' | 'slate';
 interface CVCardProps {
   id: string;
   title: string;
-  status: 'DRAFT' | 'FINAL';
+  status: 'DRAFT' | 'FINAL' | 'COMPLETED';
   lastEdited: string;
   rating: number;
   previewStyle?: PreviewStyle;
 }
+
+const statusStyles: Record<CVCardProps['status'], string> = {
+  DRAFT: 'rounded-md bg-white/90 px-2 py-1 text-[10px] font-bold tracking-wide text-orange-600',
+  FINAL: 'rounded-md bg-orange-500 px-2 py-1 text-[10px] font-bold tracking-wide text-white',
+  COMPLETED: 'rounded-md bg-green-500 px-2 py-1 text-[10px] font-bold tracking-wide text-white',
+};
 
 const previewClasses: Record<PreviewStyle, string> = {
   orange: 'bg-gradient-to-br from-orange-300 via-orange-400 to-orange-500',
@@ -76,14 +82,7 @@ export function CVCard({ id, title, status, lastEdited, rating, previewStyle = '
         <Link to={editUrl} className='block'>
           <div className={`relative h-56 w-full ${previewClasses[previewStyle]}`}>
             <div className='absolute top-4 left-4'>
-              <span
-                className={
-                  status === 'DRAFT'
-                    ? 'rounded-md bg-white/90 px-2 py-1 text-[10px] font-bold tracking-wide text-orange-600'
-                    : 'rounded-md bg-orange-500 px-2 py-1 text-[10px] font-bold tracking-wide text-white'
-                }>
-                {status}
-              </span>
+              <span className={statusStyles[status]}>{status}</span>
             </div>
 
             <div className='absolute top-3 right-3 z-10 flex gap-2'>

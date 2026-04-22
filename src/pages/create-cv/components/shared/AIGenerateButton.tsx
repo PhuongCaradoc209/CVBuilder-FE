@@ -15,6 +15,8 @@ interface AIGenerateButtonProps {
 export function AIGenerateButton({ section, draftText, cvId, onSuggest }: AIGenerateButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
 
+  if (!cvId) return null;
+
   const handleGenerate = async () => {
     if (!cvId) {
       toast.error('Please save your CV as a draft first to use AI suggestions.');

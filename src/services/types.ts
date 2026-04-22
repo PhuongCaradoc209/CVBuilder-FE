@@ -19,6 +19,7 @@ export interface PersonalInfo {
   jobTitle?: string;
   summary?: string;
   socialLinks?: SocialLink[];
+  imgUrl?: string;
 }
 
 export interface Education {
