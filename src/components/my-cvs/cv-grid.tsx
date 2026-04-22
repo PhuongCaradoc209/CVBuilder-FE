@@ -10,6 +10,7 @@ export interface CV {
   template: 'modern' | 'classic' | 'creative';
   updatedAtOrder: number;
   previewStyle?: PreviewStyle;
+  image?: string;
 }
 
 interface CVGridProps {
@@ -36,6 +37,7 @@ export function CVGrid({ cvs }: CVGridProps) {
           status={cv.status}
           lastEdited={cv.lastEdited}
           rating={cv.rating}
+          image={cv.image}
           previewStyle={cv.previewStyle}
         />
       ))}

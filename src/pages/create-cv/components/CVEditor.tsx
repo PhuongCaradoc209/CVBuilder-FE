@@ -17,7 +17,7 @@ import { NAV_PATH } from '@/router/router.constant';
 import { cvService } from '@/services/cv.service';
 import { userService } from '@/services/user.service';
 import type { CV } from '@/services/types';
-import { formatDateForInput } from '@/utils/date';
+import { formatDateForAPI, formatDateForInput } from '@/utils/date';
 import {
   CertificationSection,
   EducationSection,
@@ -208,10 +208,33 @@ export function CVEditor({ id }: CVEditorProps) {
   // Mutations
   const saveMutation = useMutation({
     mutationFn: (data: CV) => {
+      const sanitizedData = {
+        ...data,
+        experiences: data.experiences?.map((exp) => ({
+          ...exp,
+          startDate: formatDateForAPI(exp.startDate),
+          endDate: formatDateForAPI(exp.endDate),
+        })),
+        educations: data.educations?.map((edu) => ({
+          ...edu,
+          startDate: formatDateForAPI(edu.startDate),
+          endDate: formatDateForAPI(edu.endDate),
+        })),
+        projects: data.projects?.map((proj) => ({
+          ...proj,
+          startDate: formatDateForAPI(proj.startDate),
+          endDate: formatDateForAPI(proj.endDate),
+        })),
+        certifications: data.certifications?.map((cert) => ({
+          ...cert,
+          issueDate: formatDateForAPI(cert.issueDate),
+        })),
+      };
+
       if (id) {
-        return cvService.update(id, { ...data, status: 'completed' });
+        return cvService.update(id, { ...sanitizedData, status: 'completed' } as any);
       }
-      return cvService.create(data);
+      return cvService.create(sanitizedData as any);
     },
     onSuccess: (res) => {
       if (res.success) {

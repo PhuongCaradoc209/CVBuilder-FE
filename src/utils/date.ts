@@ -9,3 +9,13 @@ export const formatDateForInput = (dateString: string | null | undefined) => {
     return '';
   }
 };
+export const formatDateForAPI = (dateString: string | null | undefined) => {
+  if (!dateString || dateString === 'Not provided') return undefined;
+  try {
+    const dateObj = new Date(dateString);
+    if (isNaN(dateObj.getTime())) return undefined;
+    return dateObj.toISOString();
+  } catch (e) {
+    return undefined;
+  }
+};
