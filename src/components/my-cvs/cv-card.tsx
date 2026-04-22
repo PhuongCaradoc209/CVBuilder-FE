@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -13,7 +14,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { NAV_PATH } from '@/router/router.constant';
 import { cvService } from '@/services/cv.service';
 
@@ -25,6 +25,7 @@ interface CVCardProps {
   status: 'DRAFT' | 'FINAL' | 'COMPLETED';
   lastEdited: string;
   rating: number;
+  image?: string;
   previewStyle?: PreviewStyle;
 }
 
@@ -43,7 +44,7 @@ const previewClasses: Record<PreviewStyle, string> = {
   slate: 'bg-gradient-to-br from-slate-300 via-slate-400 to-slate-500',
 };
 
-export function CVCard({ id, title, status, lastEdited, rating, previewStyle = 'orange' }: CVCardProps) {
+export function CVCard({ id, title, status, lastEdited, rating, image, previewStyle = 'orange' }: CVCardProps) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const editUrl = NAV_PATH.APP.EDIT_CV.replace(':id', id);
   const queryClient = useQueryClient();
@@ -80,7 +81,8 @@ export function CVCard({ id, title, status, lastEdited, rating, previewStyle = '
     <>
       <article className='group h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg'>
         <Link to={editUrl} className='block'>
-          <div className={`relative h-56 w-full ${previewClasses[previewStyle]}`}>
+          <div className={`relative h-56 w-full ${!image ? previewClasses[previewStyle] : ''}`}>
+            {image && <img src={image} alt={title} className='h-full w-full object-cover' />}
             <div className='absolute top-4 left-4'>
               <span className={statusStyles[status]}>{status}</span>
             </div>
@@ -98,19 +100,21 @@ export function CVCard({ id, title, status, lastEdited, rating, previewStyle = '
               </Button>
             </div>
 
-            <div className='absolute inset-0 flex items-center justify-center'>
-              <div className='h-[160px] w-[112px] rounded-sm bg-white shadow-xl'>
-                <div className='mx-auto mt-3 h-2 w-12 rounded bg-orange-400' />
-                <div className='mx-auto mt-3 h-1.5 w-20 rounded bg-slate-200' />
-                <div className='mx-auto mt-2 h-1.5 w-16 rounded bg-slate-200' />
-                <div className='mx-auto mt-5 h-1.5 w-20 rounded bg-slate-300' />
-                <div className='mx-auto mt-2 h-1.5 w-16 rounded bg-slate-200' />
-                <div className='mx-auto mt-2 h-1.5 w-[72px] rounded bg-slate-200' />
-                <div className='mx-auto mt-5 h-1.5 w-20 rounded bg-slate-300' />
-                <div className='mx-auto mt-2 h-1.5 w-16 rounded bg-slate-200' />
-                <div className='mx-auto mt-2 h-1.5 w-[72px] rounded bg-slate-200' />
+            {!image && (
+              <div className='absolute inset-0 flex items-center justify-center'>
+                <div className='h-[160px] w-[112px] rounded-sm bg-white shadow-xl'>
+                  <div className='mx-auto mt-3 h-2 w-12 rounded bg-orange-400' />
+                  <div className='mx-auto mt-3 h-1.5 w-20 rounded bg-slate-200' />
+                  <div className='mx-auto mt-2 h-1.5 w-16 rounded bg-slate-200' />
+                  <div className='mx-auto mt-5 h-1.5 w-20 rounded bg-slate-300' />
+                  <div className='mx-auto mt-2 h-1.5 w-16 rounded bg-slate-200' />
+                  <div className='mx-auto mt-2 h-1.5 w-[72px] rounded bg-slate-200' />
+                  <div className='mx-auto mt-5 h-1.5 w-20 rounded bg-slate-300' />
+                  <div className='mx-auto mt-2 h-1.5 w-16 rounded bg-slate-200' />
+                  <div className='mx-auto mt-2 h-1.5 w-[72px] rounded bg-slate-200' />
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           <div className='flex min-h-[138px] flex-col p-4'>

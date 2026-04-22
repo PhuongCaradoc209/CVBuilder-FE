@@ -11,6 +11,23 @@ import { PaginationBar } from '@/components/my-cvs/pagination-bar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cvService } from '@/services/cv.service';
 
+// Import template thumbnails
+import atsStandardImg from '@/assets/templates/ATS-standard.png';
+import classicProfessionImg from '@/assets/templates/classic-profession.png';
+import corporateMinimalImg from '@/assets/templates/corporate-minimal.png';
+import creativeBeigeImg from '@/assets/templates/creative-beige.png';
+import editorialCreativeImg from '@/assets/templates/editorial-creative.png';
+import modernSidebarImg from '@/assets/templates/modern-sidebar.png';
+
+const TEMPLATE_THUMBNAILS: Record<string, string> = {
+  'ats-standard': atsStandardImg,
+  'classic-professional-template': classicProfessionImg,
+  'corporate_minimal': corporateMinimalImg,
+  'cv_creative_beige': creativeBeigeImg,
+  'editorial-creative-template': editorialCreativeImg,
+  'modern-sidebar': modernSidebarImg,
+};
+
 const PAGE_SIZE = 8;
 
 const PREVIEW_STYLES: PreviewStyle[] = ['orange', 'paper', 'dark', 'beige', 'navy', 'slate'];
@@ -48,6 +65,7 @@ export default function MyCvsPage() {
         template: 'modern',
         updatedAtOrder: updatedAt.getTime(),
         previewStyle: PREVIEW_STYLES[index % PREVIEW_STYLES.length],
+        image: TEMPLATE_THUMBNAILS[item.templateId || ''] || modernSidebarImg,
       };
     });
   }, [apiResponse]);

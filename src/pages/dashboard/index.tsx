@@ -10,6 +10,24 @@ import ResumeCard from '@/components/common/ResumeCard';
 import { AppConfirmModal } from '@/components/common/AppConfirmModal';
 import { cvService } from '@/services/cv.service';
 import { NAV_PATH } from '@/router/router.constant';
+import { TEMPLATE_OPTIONS } from '@/components/templates/template-registry';
+
+// Import template thumbnails
+import atsStandardImg from '@/assets/templates/ATS-standard.png';
+import classicProfessionImg from '@/assets/templates/classic-profession.png';
+import corporateMinimalImg from '@/assets/templates/corporate-minimal.png';
+import creativeBeigeImg from '@/assets/templates/creative-beige.png';
+import editorialCreativeImg from '@/assets/templates/editorial-creative.png';
+import modernSidebarImg from '@/assets/templates/modern-sidebar.png';
+
+const TEMPLATE_THUMBNAILS: Record<string, string> = {
+  'ats-standard': atsStandardImg,
+  'classic-professional-template': classicProfessionImg,
+  'corporate_minimal': corporateMinimalImg,
+  'cv_creative_beige': creativeBeigeImg,
+  'editorial-creative-template': editorialCreativeImg,
+  'modern-sidebar': modernSidebarImg,
+};
 
 interface CircularProgressProps {
   value: number;
@@ -197,8 +215,8 @@ const DashboardPage = () => {
                 id={resume._id}
                 title={resume.cvTitle}
                 updated={`Updated ${new Date(resume.updatedAt).toLocaleDateString()}`}
-                template={resume.templateId === 'ats-standard' ? 'ATS Standard' : 'Modern Sidebar'}
-                image={resume.templateId === 'ats-standard' ? '/src/assets/Background.png' : '/src/assets/Background (1).png'}
+                template={TEMPLATE_OPTIONS.find(t => t.id === resume.templateId)?.name || 'Modern Sidebar'}
+                image={TEMPLATE_THUMBNAILS[resume.templateId] || modernSidebarImg}
                 isStarred={false}
                 onClick={() => handleEditCV(resume._id)}
                 onDelete={() => handleDeleteCV(resume._id)}
