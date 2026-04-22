@@ -5,5 +5,5 @@ export * from './SkillSection';
 export * from './ProjectSection';
 export * from './CertificationSection';
 export * from './LanguageSection';
-export * from './shared/FormHelpers';
+export * from './shared';
 export * from './CVEditor';

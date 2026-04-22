@@ -3,7 +3,7 @@ import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { AppDatePicker } from '@/components/app-datepicker';
 import { Input } from '@/components/ui/input';
 import type { CV } from '@/services/types';
-import { EntryCard, FormLabel, SectionToolbar } from './shared/FormHelpers';
+import { AIGenerateButton, AutoResizeTextarea, EntryCard, FormLabel, SectionToolbar } from './shared';
 
 const inputClassName =
   'border-border bg-muted text-foreground placeholder:text-muted-foreground h-12 rounded-xl border shadow-none';
@@ -11,11 +11,13 @@ const textareaClassName =
   'border-border bg-muted text-foreground placeholder:text-muted-foreground min-h-28 w-full rounded-xl border px-4 py-3 text-sm outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50';
 
 export function ExperienceSection() {
-  const { register, control } = useFormContext<CV>();
+  const { register, control, watch, setValue } = useFormContext<CV>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'experiences',
   });
+
+  const cvId = watch('_id');
 
   return (
     <div className='space-y-6'>
@@ -65,9 +67,18 @@ export function ExperienceSection() {
               </div>
 
               <div className='space-y-2 md:col-span-2'>
-                <FormLabel>Description</FormLabel>
-                <textarea
+                <div className='flex items-center justify-between'>
+                  <FormLabel>Description</FormLabel>
+                  <AIGenerateButton
+                    section='experiences'
+                    cvId={cvId}
+                    draftText={watch(`experiences.${index}.description`)}
+                    onSuggest={(suggestion) => setValue(`experiences.${index}.description`, suggestion)}
+                  />
+                </div>
+                <AutoResizeTextarea
                   {...register(`experiences.${index}.description`)}
+                  value={watch(`experiences.${index}.description`)}
                   placeholder='Describe your responsibilities and achievements...'
                   className={textareaClassName}
                 />

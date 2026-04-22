@@ -2,7 +2,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { Input } from '@/components/ui/input';
 import type { CV } from '@/services/types';
-import { EntryCard, FormLabel, SectionToolbar } from './shared/FormHelpers';
+import { AIGenerateButton, AutoResizeTextarea, EntryCard, FormLabel, SectionToolbar } from './shared';
 
 const inputClassName =
   'border-border bg-muted text-foreground placeholder:text-muted-foreground h-12 rounded-xl border shadow-none';
@@ -10,11 +10,13 @@ const textareaClassName =
   'border-border bg-muted text-foreground placeholder:text-muted-foreground min-h-28 w-full rounded-xl border px-4 py-3 text-sm outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50';
 
 export function PersonalInfoSection() {
-  const { register, control } = useFormContext<CV>();
+  const { register, control, watch, setValue } = useFormContext<CV>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'personalInfo.socialLinks' as any, // Typed for easier structure
   });
+
+  const cvId = watch('_id');
 
   return (
     <div className='space-y-6'>
@@ -49,9 +51,18 @@ export function PersonalInfoSection() {
         </div>
 
         <div className='space-y-2 md:col-span-2'>
-          <FormLabel>Summary</FormLabel>
-          <textarea
+          <div className='flex items-center justify-between'>
+            <FormLabel>Summary</FormLabel>
+            <AIGenerateButton
+              section='summary'
+              cvId={cvId}
+              draftText={watch('personalInfo.summary')}
+              onSuggest={(suggestion) => setValue('personalInfo.summary', suggestion)}
+            />
+          </div>
+          <AutoResizeTextarea
             {...register('personalInfo.summary')}
+            value={watch('personalInfo.summary')}
             placeholder='Building modern web applications with JavaScript, React, and Node.js'
             className={textareaClassName}
           />
