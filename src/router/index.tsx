@@ -3,11 +3,11 @@ import { type RouteObject } from 'react-router-dom';
 // import { mockCVData } from '@/components/cv-templates/modern-sidebar';
 
 import { NAV_PATH } from './router.constant';
+const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
 
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage'));
 const LoginSuccessPage = lazy(() => import('@/pages/auth/LoginSuccessPage'));
-const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
 const NotFoundPage = lazy(() => import('@/pages/not-found'));
 
 const DashboardPage = lazy(() => import('@/pages/dashboard'));
