@@ -36,4 +36,15 @@ export const cvService = {
   delete: async (id: string): Promise<BaseResponse<any>> => {
     return apiClient.delete(`/cv/${id}`);
   },
+  /**
+   * Generate an AI suggestion for a CV section
+   */
+  generateAISuggestion: async (data: {
+    section: string;
+    draftText: string;
+    tone: string;
+    cvId: string;
+  }): Promise<BaseResponse<{ suggestion: string }>> => {
+    return apiClient.post('/ai/suggest', data, { timeout: 60000 });
+  },
 };

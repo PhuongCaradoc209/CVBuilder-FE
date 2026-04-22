@@ -103,3 +103,14 @@ export interface CVCreateInput {
 }
 
 export interface CVUpdateInput extends Partial<Omit<CV, '_id' | 'userId' | 'createdAt' | 'updatedAt' | '__v'>> {}
+
+export interface AISuggestRequest {
+  section: string;
+  draftText: string;
+  tone: string;
+  cvId: string;
+}
+
+export interface AISuggestResponse {
+  suggestion: string;
+}
