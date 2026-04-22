@@ -1,52 +1,45 @@
 import { useState } from 'react';
-import { Input } from '@/components/ui/input';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { CommandIcon } from '@phosphor-icons/react';
-import modernSidebarImg from '@/assets/templates/modern-sidebar.jpeg';
-import atsStandardImg from '@/assets/templates/ats-standard.jpeg';
+import { Input } from '@/components/ui/input';
+import { CommandIcon } from 'lucide-react';
 
-const templates = [
-  {
-    title: 'Modern Sidebar',
-    tags: ['Professional', 'Two-column'],
-    image: modernSidebarImg,
-  },
-  {
-    title: 'ATS Standard',
-    tags: ['Simple', 'Professional'],
-    image: atsStandardImg,
-  },
-  {
-    title: 'Creative Spark',
-    tags: ['Designer', 'Portfolio'],
-    image: 'img3.png',
-  },
-  {
-    title: 'Academic Classic',
-    tags: ['Traditional', 'Multi-page'],
-    image: 'img4.png',
-  },
-  {
-    title: 'Software Engineer',
-    tags: ['Technical', 'ATS-optimized'],
-    image: 'img5.png',
-  },
-  {
-    title: 'Marketing Guru',
-    tags: ['Visual', 'Modern'],
-    image: 'img6.png',
-  },
-];
+import atsStandardImg from '@/assets/templates/ATS-standard.png';
+import classicProfessionalImg from '@/assets/templates/classic-profession.png';
+import corporateMinimalImg from '@/assets/templates/corporate-minimal.png';
+import creativeBeigeImg from '@/assets/templates/creative-beige.png';
+import editorialCreativeImg from '@/assets/templates/editorial-creative.png';
+import modernSidebarImg from '@/assets/templates/modern-sidebar.png';
+
+import { CVTemplateKey, TEMPLATE_OPTIONS } from '@/components/templates/template-registry';
+import { NAV_PATH } from '@/router/router.constant';
+
+// Map template IDs to imported images
+const templateImageMap: Record<string, string> = {
+  [CVTemplateKey.ATS_STANDARD]: atsStandardImg,
+  [CVTemplateKey.CLASSIC_PROFESSIONAL]: classicProfessionalImg,
+  [CVTemplateKey.CORPORATE_MINIMAL]: corporateMinimalImg,
+  [CVTemplateKey.CV_CREATIVE_BEIGE]: creativeBeigeImg,
+  [CVTemplateKey.EDITORIAL_CREATIVE]: editorialCreativeImg,
+  [CVTemplateKey.MODERN_SIDEBAR]: modernSidebarImg,
+};
 
 export default function TemplatesPage() {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredTemplates = templates.filter((t) => {
+  const filteredTemplates = TEMPLATE_OPTIONS.filter((t) => {
     const query = searchQuery.toLowerCase();
-    const titleMatch = t.title.toLowerCase().includes(query);
-    const tagMatch = t.tags.some((tag) => tag.toLowerCase().includes(query));
-    return titleMatch || tagMatch;
+    return (
+      t.name.toLowerCase().includes(query) ||
+      t.tags.some((tag) => tag.toLowerCase().includes(query)) ||
+      t.category.toLowerCase().includes(query)
+    );
   });
+
+  const handleUseTemplate = (id: string) => {
+    navigate(`${NAV_PATH.APP.CREATE_CV}?template=${id}`);
+  };
 
   return (
     <div className='space-y-10 px-8 pb-8'>
@@ -68,19 +61,28 @@ export default function TemplatesPage() {
       />
 
       <div className='grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3'>
-        {filteredTemplates.map((item, index) => (
-          <div key={index} className='flex flex-col overflow-hidden rounded-xl border border-gray-400 transition hover:shadow-md'>
+        {filteredTemplates.map((template) => (
+          <div
+            key={template.id}
+            className='flex flex-col overflow-hidden rounded-xl border border-gray-400 transition hover:shadow-md'>
             {/* IMAGE */}
             <div className='h-55 w-full'>
-              <img src={item.image} alt={item.title} className='h-full w-full object-cover' />
+              <img
+                src={templateImageMap[template.id] || `https://placehold.co/600x800/f1f5f9/64748b?text=${template.name}`}
+                alt={template.name}
+                className='h-full w-full object-cover object-top'
+              />
             </div>
 
             <div className='flex flex-1 flex-col space-y-2 p-4'>
               {/* TITLE */}
-              <h3 className='-mt-1 font-semibold'>{item.title}</h3>
+              <h3 className='-mt-1 font-semibold'>{template.name}</h3>
               {/* TAGS (BADGE) */}
               <div className='flex flex-wrap gap-2'>
-                {item.tags.map((tag, i) => (
+                <span className='rounded-md bg-orange-100 px-2 py-1 text-sm font-semibold text-orange-600'>
+                  {template.category}
+                </span>
+                {template.tags.map((tag, i) => (
                   <span key={i} className='rounded-md bg-gray-200 px-2 py-1 text-sm font-semibold text-gray-600'>
                     {tag}
                   </span>
@@ -88,7 +90,9 @@ export default function TemplatesPage() {
               </div>
 
               <div className='mt-auto pt-2'>
-                <Button className='w-full'>Use Template</Button>
+                <Button onClick={() => handleUseTemplate(template.id)} className='w-full'>
+                  Use Template
+                </Button>
               </div>
             </div>
           </div>

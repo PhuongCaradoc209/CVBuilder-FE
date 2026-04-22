@@ -2,7 +2,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { Input } from '@/components/ui/input';
 import type { CV } from '@/services/types';
-import { EntryCard, FormLabel, SectionToolbar } from './shared/FormHelpers';
+import { EntryCard, FormLabel, SectionToolbar } from './shared';
 
 const inputClassName =
   'border-border bg-muted text-foreground placeholder:text-muted-foreground h-12 rounded-xl border shadow-none';

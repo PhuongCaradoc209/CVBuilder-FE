@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useMemo } from 'react';
+import { toPng } from 'html-to-image';
+import jsPDF from 'jspdf';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
 import { Download, Eye, Search, Share2 } from 'lucide-react';
@@ -126,9 +128,13 @@ interface CVEditorProps {
 export function CVEditor({ id }: CVEditorProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [searchParams] = useSearchParams();
+  const templateFromQuery = searchParams.get('template');
+  const cvRef = useRef<HTMLDivElement>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const methods = useForm<CV>({
-    defaultValues: defaultValues as any,
+    defaultValues: { ...defaultValues, templateId: templateFromQuery || defaultValues.templateId } as any,
   });
 
   const { register, watch, handleSubmit, reset, setValue } = methods;
@@ -145,9 +151,14 @@ export function CVEditor({ id }: CVEditorProps) {
         }
       });
     } else {
-      reset(defaultValues as any);
+      // If creating new, and template is in query, update it
+      if (templateFromQuery) {
+        setValue('templateId', templateFromQuery);
+      } else {
+        reset(defaultValues as any);
+      }
     }
-  }, [id, reset]);
+  }, [id, reset, templateFromQuery, setValue]);
 
   // Mutations
   const saveMutation = useMutation({
@@ -169,6 +180,43 @@ export function CVEditor({ id }: CVEditorProps) {
 
   const onSave = (data: CV) => {
     saveMutation.mutate(data);
+  };
+
+  const handleDownloadPDF = async () => {
+    if (!cvRef.current) return;
+
+    try {
+      setIsDownloading(true);
+      const element = cvRef.current;
+      const fileName = `${formData.cvTitle?.replace(/\s+/g, '_') || 'CV'}.pdf`;
+
+      // Convert HTML to high resolution PNG
+      const dataUrl = await toPng(element, {
+        quality: 1,
+        pixelRatio: 2,
+        skipFonts: false,
+        backgroundColor: '#ffffff',
+      });
+
+      const elementWidth = element.offsetWidth;
+      const elementHeight = element.offsetHeight;
+
+      const pdf = new jsPDF({
+        orientation: elementWidth > elementHeight ? 'landscape' : 'portrait',
+        unit: 'px',
+        format: [elementWidth, elementHeight],
+      });
+
+      pdf.addImage(dataUrl, 'PNG', 0, 0, elementWidth, elementHeight);
+      pdf.save(fileName);
+
+      toast.success('CV downloaded successfully!');
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast.error('Failed to generate PDF');
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const handleFillSampleData = () => {
@@ -218,8 +266,12 @@ export function CVEditor({ id }: CVEditorProps) {
               {saveMutation.isPending ? (id ? 'Updating...' : 'Saving...') : id ? 'Update CV' : 'Save Draft'}
             </Button>
 
-            <Button type='button' className='bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl shadow-none'>
-              Download PDF
+            <Button
+              type='button'
+              onClick={handleDownloadPDF}
+              disabled={isDownloading}
+              className='bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl shadow-none'>
+              {isDownloading ? 'Downloading...' : 'Download PDF'}
             </Button>
           </div>
         </div>
@@ -358,7 +410,9 @@ export function CVEditor({ id }: CVEditorProps) {
 
             {/* Scaled Preview */}
             <ScaledTemplatePreview>
-              <TemplateComponent {...previewProps} />
+              <div ref={cvRef}>
+                <TemplateComponent {...previewProps} />
+              </div>
             </ScaledTemplatePreview>
           </div>
         </div>

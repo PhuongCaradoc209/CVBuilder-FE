@@ -3,7 +3,7 @@ import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { AppDatePicker } from '@/components/app-datepicker';
 import { Input } from '@/components/ui/input';
 import type { CV } from '@/services/types';
-import { EntryCard, FormLabel, SectionToolbar } from './shared/FormHelpers';
+import { AutoResizeTextarea, EntryCard, FormLabel, SectionToolbar } from './shared';
 
 const inputClassName =
   'border-border bg-muted text-foreground placeholder:text-muted-foreground h-12 rounded-xl border shadow-none';
@@ -11,7 +11,7 @@ const textareaClassName =
   'border-border bg-muted text-foreground placeholder:text-muted-foreground min-h-28 w-full rounded-xl border px-4 py-3 text-sm outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50';
 
 export function ProjectSection() {
-  const { register, control } = useFormContext<CV>();
+  const { register, control, watch } = useFormContext<CV>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'projects',
@@ -66,8 +66,9 @@ export function ProjectSection() {
 
               <div className='space-y-2 md:col-span-2'>
                 <FormLabel>Description</FormLabel>
-                <textarea
+                <AutoResizeTextarea
                   {...register(`projects.${index}.description`)}
+                  value={watch(`projects.${index}.description`)}
                   placeholder='Briefly describe the project...'
                   className={textareaClassName}
                 />
