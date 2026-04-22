@@ -6,7 +6,7 @@ interface InputFieldProps extends React.ComponentProps<typeof Input> {
   id: string;
   label: string;
   subLabel?: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   className?: string;
 }
 
@@ -31,7 +31,7 @@ const InputField = ({ id, label, subLabel, icon, className, type, ...props }: In
         <Input
           id={id}
           type={isPassword ? (showPassword ? 'text' : 'password') : type}
-          className={`rounded-3xl py-5 pl-12 outline-none focus:ring-1 focus:ring-orange-500 ${className || ''}`}
+          className={`rounded-3xl py-5 ${icon ? 'pl-12' : 'pl-4'} outline-none focus:ring-1 focus:ring-orange-500 ${className || ''}`}
           {...props}
         />
       </div>

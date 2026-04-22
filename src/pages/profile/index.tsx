@@ -4,6 +4,12 @@ import { ContactCard } from '@/components/common/contactCard';
 import { BasicInfoCard } from '@/components/common/basicInfoCard';
 import { SecurityCard } from '@/components/common/securityCard';
 import { SignOutIcon } from '@phosphor-icons/react';
+import { EditIcon, Plus, Trash2 } from 'lucide-react';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import InputField from '@/components/common/inputField';
+import { Separator } from '@/components/ui/separator';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 export default function ProfilePage() {
   const user = {
@@ -26,6 +32,49 @@ export default function ProfilePage() {
     ],
   };
 
+  const [formData, setFormData] = useState({
+    experiences: [{ id: Date.now(), position: '', companyName: '', startDate: '', endDate: '' }],
+    educations: [{ id: Date.now() + 1, schoolName: '', major: '', startDate: '', endDate: '' }],
+  });
+
+  const profileData = useQuery({
+    mutationFn: authService.login,
+    onSuccess: (data: any) => {
+      localStorage.setItem('access_token', data.accessToken);
+      navigate('/');
+    },
+    onError: (error: any) => {
+      console.log(error);
+      alert(error.response?.data?.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại!');
+    },
+  });
+
+  // 2. HÀM THÊM DÙNG CHUNG
+  // fieldName: tên mảng ('experiences' | 'educations' | 'websites')
+  // emptyItem: cấu trúc object trống tương ứng với mảng đó
+  const handleAdd = (fieldName: string, emptyItem: any) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      [fieldName]: [...prev[fieldName], { id: Date.now(), ...emptyItem }],
+    }));
+  };
+
+  // 3. HÀM XÓA DÙNG CHUNG
+  const handleRemove = (fieldName: string, idToRemove: number) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      [fieldName]: prev[fieldName].filter((item: any) => item.id !== idToRemove),
+    }));
+  };
+
+  // 4. HÀM SỬA (Cập nhật text khi gõ) DÙNG CHUNG
+  const handleChange = (fieldName: string, id: number, keyToUpdate: string, value: string) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      [fieldName]: prev[fieldName].map((item: any) => (item.id === id ? { ...item, [keyToUpdate]: value } : item)),
+    }));
+  };
+
   return (
     <div className='space-y-8 px-6 pt-6 pb-6'>
       <div>
@@ -36,7 +85,226 @@ export default function ProfilePage() {
       <div className='grid grid-cols-12 gap-6'>
         <div className='col-span-4'>
           <ProfileCard user={user} />
+          <Dialog>
+            {/* Nút để mở Dialog */}
+            <DialogTrigger asChild>
+              <Button
+                variant='outline'
+                className='text-md mt-4 w-full border-none bg-white p-6 font-semibold text-blue-500 shadow-md hover:bg-blue-50 hover:text-blue-600'>
+                <EditIcon size={36} />
+                Update Profile
+              </Button>
+            </DialogTrigger>
 
+            {/* Nội dung bên trong Dialog */}
+            <DialogContent className='max-h-[90vh] overflow-y-auto sm:max-w-5xl pb-0 overscroll-none'>
+              <DialogHeader>
+                <DialogTitle className='text-xl font-bold text-orange-400'>Update Profile</DialogTitle>
+                <DialogDescription>Change your personal information here. Click save when done.</DialogDescription>
+              </DialogHeader>
+              <div className='grid grid-cols-2 gap-x-10 gap-y-4'>
+                <InputField
+                  id='name'
+                  label='Name'
+                  placeholder='Enter your full name'
+                  type='text'
+                  className='rounded-lg focus:ring-orange-400'
+                  // onChange={(e: any) => setPassword(e.target.value)}
+                />
+                <InputField
+                  id='position'
+                  label='Position'
+                  placeholder='Enter your position'
+                  type='text'
+                  className='rounded-lg focus:ring-orange-400'
+                  // onChange={(e: any) => setPassword(e.target.value)}
+                />
+                <InputField
+                  id='email'
+                  label='Email'
+                  placeholder='Enter your email'
+                  type='email'
+                  className='rounded-lg focus:ring-orange-400'
+                  // onChange={(e: any) => setPassword(e.target.value)}
+                />
+                <InputField
+                  id='contact'
+                  label='Contact'
+                  placeholder='Enter your contact information'
+                  type='text'
+                  className='rounded-lg focus:ring-orange-400'
+                  // onChange={(e: any) => setPassword(e.target.value)}
+                />
+                <InputField
+                  id='birthday'
+                  label='Birthday'
+                  placeholder='Enter your birthday'
+                  type='date'
+                  className='rounded-lg focus:ring-orange-400'
+                  // onChange={(e: any) => setPassword(e.target.value)}
+                />
+                <InputField
+                  id='gender'
+                  label='Gender'
+                  placeholder='Enter your gender'
+                  type='text'
+                  className='rounded-lg focus:ring-orange-400'
+                  // onChange={(e: any) => setPassword(e.target.value)}
+                />
+              </div>
+              <InputField
+                id='website'
+                label='Website'
+                placeholder='Enter your website'
+                type='url'
+                className='rounded-lg focus:ring-orange-400'
+                // onChange={(e: any) => setPassword(e.target.value)}
+              />
+              <Separator />
+              <div className='flex items-center gap-2'>
+                <div className='text-lg font-semibold'>Experiences</div>
+                <Button
+                  type='button'
+                  variant='outline'
+                  className='h-6 w-6'
+                  onClick={() => handleAdd('experiences', { position: '', companyName: '', startDate: '', endDate: '' })}>
+                  <Plus className='h-4 w-4' />
+                </Button>
+              </div>
+              <div>
+                <div className='space-y-2'>
+                  {formData.experiences.map((item) => (
+                    <div key={item.id} className='relative flex items-start gap-4 rounded-lg bg-gray-50'>
+                      <div className='grid w-full grid-cols-6 gap-4'>
+                        <div className='col-span-2'>
+                          <InputField
+                            className='rounded-lg focus:ring-orange-400'
+                            id={`role-${item.id}`}
+                            label='Position'
+                            value={item.position}
+                            onChange={(e) => handleChange('experiences', item.id, 'position', e.target.value)}
+                          />
+                        </div>
+                        <div className='col-span-2'>
+                          <InputField
+                            className='rounded-lg focus:ring-orange-400'
+                            id={`company-${item.id}`}
+                            label='Company'
+                            value={item.companyName}
+                            onChange={(e) => handleChange('experiences', item.id, 'companyName', e.target.value)}
+                          />
+                        </div>
+                        <div className='col-span-1'>
+                          <InputField
+                            className='rounded-lg focus:ring-orange-400'
+                            type='date'
+                            id={`start-${item.id}`}
+                            label='Start Date'
+                            value={item.startDate}
+                            onChange={(e) => handleChange('experiences', item.id, 'startDate', e.target.value)}
+                          />
+                        </div>
+                        <div className='col-span-1'>
+                          <InputField
+                            className='rounded-lg focus:ring-orange-400'
+                            type='date'
+                            id={`end-${item.id}`}
+                            label='End Date'
+                            value={item.endDate}
+                            onChange={(e) => handleChange('experiences', item.id, 'endDate', e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <Button
+                        type='button'
+                        variant='ghost'
+                        size='icon'
+                        className='mt-8 text-red-500'
+                        onClick={() => handleRemove('experiences', item.id)}>
+                        <Trash2 className='h-5 w-5' />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <Separator />
+              <div className='flex items-center gap-2'>
+                <div className='text-lg font-semibold'>Educations</div>
+                <Button
+                  type='button'
+                  variant='outline'
+                  className='h-6 w-6'
+                  onClick={() => handleAdd('educations', { schoolName: '', major: '', startDate: '', endDate: '' })}>
+                  <Plus className='h-4 w-4' />
+                </Button>
+              </div>
+              <div>
+                <div className='space-y-2'>
+                  {formData.educations.map((item) => (
+                    <div key={item.id} className='relative flex items-start gap-4 rounded-lg bg-gray-50'>
+                      <div className='grid w-full grid-cols-6 gap-4'>
+                        <div className='col-span-2'>
+                          <InputField
+                            className='rounded-lg focus:ring-orange-400'
+                            id={`schoolName-${item.id}`}
+                            label='School Name'
+                            value={item.schoolName}
+                            onChange={(e) => handleChange('educations', item.id, 'schoolName', e.target.value)}
+                          />
+                        </div>
+                        <div className='col-span-2'>
+                          <InputField
+                            className='rounded-lg focus:ring-orange-400'
+                            id={`major-${item.id}`}
+                            label='Major'
+                            value={item.major}
+                            onChange={(e) => handleChange('educations', item.id, 'major', e.target.value)}
+                          />
+                        </div>
+                        <div className='col-span-1'>
+                          <InputField
+                            className='rounded-lg focus:ring-orange-400'
+                            type='date'
+                            id={`start-${item.id}`}
+                            label='Start Date'
+                            value={item.startDate}
+                            onChange={(e) => handleChange('educations', item.id, 'startDate', e.target.value)}
+                          />
+                        </div>
+                        <div className='col-span-1'>
+                          <InputField
+                            className='rounded-lg focus:ring-orange-400'
+                            type='date'
+                            id={`end-${item.id}`}
+                            label='End Date'
+                            value={item.endDate}
+                            onChange={(e) => handleChange('educations', item.id, 'endDate', e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <Button
+                        type='button'
+                        variant='ghost'
+                        size='icon'
+                        className='mt-8 text-red-500'
+                        onClick={() => handleRemove('educations', item.id)}>
+                        <Trash2 className='h-5 w-5' />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className='sticky bottom-0 py-4 w-full bg-[#f8fafe] z-1 flex justify-center'>
+                <Button
+                  type='button'
+                  variant='outline'
+                  className='w-fit border-orange-500 bg-orange-50 font-semibold text-orange-400 hover:bg-orange-200'>
+                  Update
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
           <Button
             variant='outline'
             className='text-md mt-4 w-full border-none bg-white p-6 font-semibold text-red-700 shadow-md hover:bg-red-50 hover:text-red-800'>
