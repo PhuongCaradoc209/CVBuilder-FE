@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import type { Education, Experience, Info, Skill } from '@/components/types/type';
+import { formatDate } from '@/lib/utils';
 
 export interface ClassicProfessionalTemplateProps {
   info: Info;
@@ -25,7 +26,9 @@ function HeaderSeparator() {
 }
 
 function DateRange({ startDate, endDate }: { startDate?: string; endDate?: string }) {
-  const value = startDate || endDate ? `${startDate ?? ''}${startDate || endDate ? ' - ' : ''}${endDate ?? ''}` : '';
+  const start = formatDate(startDate);
+  const end = formatDate(endDate);
+  const value = start || end ? `${start ?? ''}${start && end ? ' - ' : ''}${end ?? ''}` : '';
 
   if (!value.trim()) return null;
 

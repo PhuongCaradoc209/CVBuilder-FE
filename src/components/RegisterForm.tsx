@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { authService } from '@/services/auth.service';
 
+import { toast } from 'sonner';
+
 export default function RegisterForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -21,23 +23,24 @@ export default function RegisterForm() {
   const loginMutation = useMutation({
     mutationFn: authService.register,
     onSuccess: () => {
+      toast.success('Đăng ký tài khoản thành công!');
       navigate('/login');
     },
     onError: (error: any) => {
       console.log(error);
-      alert(error.response?.data?.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại!');
+      toast.error(error.response?.data?.message || 'Đăng ký thất bại. Vui lòng kiểm tra lại!');
     },
   });
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email || !password || !fullName) {
-      alert('Vui lòng điền đầy đủ thông tin!');
+      toast.warning('Vui lòng điền đầy đủ thông tin!');
       return;
     }
 
     if (password !== confirmedPassword) {
-      alert('Password and Confirm Password do not match!');
+      toast.warning('Password and Confirm Password do not match!');
       return;
     }
     // Gọi API

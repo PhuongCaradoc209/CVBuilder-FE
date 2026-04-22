@@ -10,6 +10,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 
+import { toast } from 'sonner';
+
 function LoginPage() {
   const backendUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
@@ -26,17 +28,18 @@ function LoginPage() {
     mutationFn: authService.login,
     onSuccess: (data: any) => {
       localStorage.setItem('access_token', data.accessToken);
+      toast.success('Đăng nhập thành công!');
       navigate('/');
     },
     onError: (error: any) => {
       console.log(error);
-      alert(error.response?.data?.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại!');
+      toast.error(error.response?.data?.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại!');
     },
   });
 
   const handleLogin = () => {
     if (!email || !password) {
-      alert('Vui lòng nhập đầy đủ Email và Password!');
+      toast.warning('Vui lòng nhập đầy đủ Email và Password!');
       return;
     }
     // Gọi API

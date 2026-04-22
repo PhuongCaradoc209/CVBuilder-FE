@@ -1,125 +1,20 @@
+import { useQuery } from '@tanstack/react-query';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 import { useMemo, useState } from 'react';
 
 import { CVGrid, type CV } from '@/components/my-cvs/cv-grid';
+import { type PreviewStyle } from '@/components/my-cvs/cv-card';
 import { FilterBar } from '@/components/my-cvs/filter-bar';
 import { FloatingCreateButton } from '@/components/my-cvs/floating-create-button';
 import { PageHeader } from '@/components/my-cvs/page-header';
 import { PaginationBar } from '@/components/my-cvs/pagination-bar';
+import { Skeleton } from '@/components/ui/skeleton';
+import { cvService } from '@/services/cv.service';
 
 const PAGE_SIZE = 8;
 
-const mockCvs: CV[] = [
-  {
-    id: '1',
-    title: 'Product Designer CV',
-    status: 'DRAFT',
-    lastEdited: '2 hours ago',
-    rating: 5,
-    tag: 'work',
-    template: 'modern',
-    updatedAtOrder: 2,
-    previewStyle: 'orange',
-  },
-  {
-    id: '2',
-    title: 'Backend Engineer CV',
-    status: 'FINAL',
-    lastEdited: '1 day ago',
-    rating: 5,
-    tag: 'work',
-    template: 'classic',
-    updatedAtOrder: 24,
-    previewStyle: 'paper',
-  },
-  {
-    id: '3',
-    title: 'Project Manager CV',
-    status: 'FINAL',
-    lastEdited: '3 days ago',
-    rating: 4,
-    tag: 'work',
-    template: 'classic',
-    updatedAtOrder: 72,
-    previewStyle: 'dark',
-  },
-  {
-    id: '4',
-    title: 'Marketing Lead CV',
-    status: 'DRAFT',
-    lastEdited: '1 week ago',
-    rating: 5,
-    tag: 'freelance',
-    template: 'creative',
-    updatedAtOrder: 168,
-    previewStyle: 'orange',
-  },
-  {
-    id: '5',
-    title: 'CEO Executive CV',
-    status: 'FINAL',
-    lastEdited: '2 weeks ago',
-    rating: 5,
-    tag: 'work',
-    template: 'classic',
-    updatedAtOrder: 336,
-    previewStyle: 'beige',
-  },
-  {
-    id: '6',
-    title: 'Fullstack Developer',
-    status: 'DRAFT',
-    lastEdited: '1 month ago',
-    rating: 4,
-    tag: 'personal',
-    template: 'modern',
-    updatedAtOrder: 720,
-    previewStyle: 'dark',
-  },
-  {
-    id: '7',
-    title: 'Data Scientist CV',
-    status: 'FINAL',
-    lastEdited: '2 months ago',
-    rating: 5,
-    tag: 'work',
-    template: 'modern',
-    updatedAtOrder: 1440,
-    previewStyle: 'navy',
-  },
-  {
-    id: '8',
-    title: 'Content Strategist',
-    status: 'DRAFT',
-    lastEdited: '3 months ago',
-    rating: 4,
-    tag: 'freelance',
-    template: 'classic',
-    updatedAtOrder: 2160,
-    previewStyle: 'slate',
-  },
-  {
-    id: '9',
-    title: 'UI Designer Portfolio CV',
-    status: 'FINAL',
-    lastEdited: '4 months ago',
-    rating: 5,
-    tag: 'personal',
-    template: 'creative',
-    updatedAtOrder: 2880,
-    previewStyle: 'orange',
-  },
-  {
-    id: '10',
-    title: 'Junior Frontend Resume',
-    status: 'DRAFT',
-    lastEdited: '5 months ago',
-    rating: 4,
-    tag: 'work',
-    template: 'modern',
-    updatedAtOrder: 3600,
-    previewStyle: 'paper',
-  },
-];
+const PREVIEW_STYLES: PreviewStyle[] = ['orange', 'paper', 'dark', 'beige', 'navy', 'slate'];
+const TAGS: ('work' | 'freelance' | 'personal')[] = ['work', 'freelance', 'personal'];
 
 export default function MyCvsPage() {
   const [search, setSearch] = useState('');
@@ -128,8 +23,37 @@ export default function MyCvsPage() {
   const [sortBy, setSortBy] = useState('last-edited');
   const [currentPage, setCurrentPage] = useState(1);
 
+  const {
+    data: apiResponse,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['cvs'],
+    queryFn: () => cvService.getAll(),
+  });
+
+  const cvs = useMemo(() => {
+    if (!apiResponse?.success || !apiResponse.data) return [];
+
+    return apiResponse.data.map((item, index): CV => {
+      const updatedAt = parseISO(item.updatedAt);
+
+      return {
+        id: item._id,
+        title: item.cvTitle || 'Untitled CV',
+        status: (item.status?.toUpperCase() as 'DRAFT' | 'FINAL') || 'DRAFT',
+        lastEdited: formatDistanceToNow(updatedAt, { addSuffix: true }),
+        rating: 5,
+        tag: TAGS[index % TAGS.length],
+        template: 'modern',
+        updatedAtOrder: updatedAt.getTime(),
+        previewStyle: PREVIEW_STYLES[index % PREVIEW_STYLES.length],
+      };
+    });
+  }, [apiResponse]);
+
   const filteredCvs = useMemo(() => {
-    let result = [...mockCvs];
+    let result = [...cvs];
 
     if (search.trim()) {
       const keyword = search.trim().toLowerCase();
@@ -145,7 +69,7 @@ export default function MyCvsPage() {
     }
 
     if (sortBy === 'last-edited') {
-      result.sort((a, b) => a.updatedAtOrder - b.updatedAtOrder);
+      result.sort((a, b) => b.updatedAtOrder - a.updatedAtOrder);
     } else if (sortBy === 'name') {
       result.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortBy === 'rating') {
@@ -153,7 +77,7 @@ export default function MyCvsPage() {
     }
 
     return result;
-  }, [search, tag, template, sortBy]);
+  }, [cvs, search, tag, template, sortBy]);
 
   const totalPages = Math.max(1, Math.ceil(filteredCvs.length / PAGE_SIZE));
   const safeCurrentPage = Math.min(currentPage, totalPages);
@@ -183,6 +107,15 @@ export default function MyCvsPage() {
     setCurrentPage(1);
   };
 
+  if (isError) {
+    return (
+      <div className='mx-auto w-full max-w-[1440px] px-4 py-12 text-center'>
+        <h2 className='text-2xl font-bold text-red-600'>Something went wrong</h2>
+        <p className='mt-2 text-slate-600'>Failed to load your CVs. Please try again later.</p>
+      </div>
+    );
+  }
+
   return (
     <div className='mx-auto w-full max-w-[1440px]'>
       <PageHeader />
@@ -196,7 +129,23 @@ export default function MyCvsPage() {
         onSortChange={handleSortChange}
       />
 
-      <CVGrid cvs={currentItems} />
+      {isLoading ? (
+        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className='h-[400px] rounded-2xl border border-slate-200 bg-white p-4 shadow-sm'>
+              <Skeleton className='h-56 w-full rounded-xl' />
+              <Skeleton className='mt-4 h-6 w-3/4' />
+              <Skeleton className='mt-2 h-4 w-1/2' />
+              <div className='mt-auto flex justify-between pt-6'>
+                <Skeleton className='h-4 w-24' />
+                <Skeleton className='size-8 rounded-full' />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <CVGrid cvs={currentItems} />
+      )}
 
       <PaginationBar currentPage={safeCurrentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 

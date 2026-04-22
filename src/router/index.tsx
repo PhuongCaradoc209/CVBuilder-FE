@@ -14,6 +14,7 @@ const DashboardPage = lazy(() => import('@/pages/dashboard'));
 const ProfilePage = lazy(() => import('@/pages/profile'));
 const MyCvsPage = lazy(() => import('@/pages/my-cvs'));
 const CreateCvPage = lazy(() => import('@/pages/create-cv'));
+const EditCvPage = lazy(() => import('@/pages/edit-cv'));
 const TemplatesPage = lazy(() => import('@/pages/templates'));
 // test template
 // const ModernSidebarTemplate = lazy(() => import('@/components/cv-templates/modern-sidebar'));
@@ -56,6 +57,10 @@ const appRoutes: RouteObject[] = [
       {
         path: NAV_PATH.APP.CREATE_CV,
         element: <CreateCvPage />,
+      },
+      {
+        path: NAV_PATH.APP.EDIT_CV,
+        element: <EditCvPage />,
       },
       {
         path: NAV_PATH.APP.TEMPLATES,
