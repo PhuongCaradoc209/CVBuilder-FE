@@ -102,7 +102,7 @@ export default function TemplatesPage() {
       <p className='text-center text-sm text-gray-500'>Showing {filteredTemplates.length} curated templates</p>
 
       {/* SMART MATCH (FLOATING) */}
-      <div className='fixed right-6 bottom-6 w-72 space-y-3 rounded-xl bg-white p-4 shadow-lg'>
+      {/* <div className='fixed right-6 bottom-6 w-72 space-y-3 rounded-xl bg-white p-4 shadow-lg'>
         <div className='flex items-center gap-3 font-semibold'>
           <CommandIcon className='rounded-lg bg-orange-100 p-1 text-orange-500' size={40} />
           <div>
@@ -114,7 +114,7 @@ export default function TemplatesPage() {
           Based on your profile, the Software Engineer template has a 94% match rate for your target roles.
         </p>
         <Button className='w-full'>Apply Smart Filter</Button>
-      </div>
+      </div> */}
     </div>
   );
 }

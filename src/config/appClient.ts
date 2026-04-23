@@ -24,9 +24,11 @@ apiClient.interceptors.response.use(
   (error: AxiosError) => {
     console.log('API Error:', error.response);
     if (error.response?.status === 401 && (error.response.data as any)?.message !== 'Incorrect current password') {
+      if ((error.response.data as any)?.message !== 'Invalid credentials') {
+        window.localStorage.removeItem('access_token');
+        window.location.href = '/login'; // Redirect về trang login
+      }
       // Logic Logout hoặc Refresh Token ở đây
-      window.localStorage.removeItem('access_token');
-      window.location.href = '/login'; // Redirect về trang login
     }
     return Promise.reject(error);
   },

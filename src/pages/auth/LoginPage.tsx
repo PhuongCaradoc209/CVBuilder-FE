@@ -28,18 +28,18 @@ function LoginPage() {
     mutationFn: authService.login,
     onSuccess: (data: any) => {
       localStorage.setItem('access_token', data.accessToken);
-      toast.success('Đăng nhập thành công!');
+      toast.success('Login successfully!');
       navigate('/');
     },
     onError: (error: any) => {
       console.log(error);
-      toast.error(error.response?.data?.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại!');
+      toast.error('Wrong email or password! Please try again.');
     },
   });
 
   const handleLogin = () => {
     if (!email || !password) {
-      toast.warning('Vui lòng nhập đầy đủ Email và Password!');
+      toast.warning('Please enter your email or password!');
       return;
     }
     // Gọi API
