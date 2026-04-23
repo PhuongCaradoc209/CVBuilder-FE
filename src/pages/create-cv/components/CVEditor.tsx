@@ -27,7 +27,9 @@ import {
   PersonalInfoSection,
   ProjectSection,
   SkillSection,
+  FormField,
 } from './index'; // Import from local index
+import { validationMessages } from './shared/validation-messages';
 import { ScaledTemplatePreview } from './TemplateReview';
 
 const inputClassName =
@@ -134,6 +136,12 @@ export function CVEditor({ id }: CVEditorProps) {
   const templateFromQuery = searchParams.get('template');
   const cvRef = useRef<HTMLDivElement>(null);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [expandedItems, setExpandedItems] = useState<string[]>([
+    'personal-info',
+    'experience',
+    'education',
+    'skills',
+  ]);
 
   const { data: profileData } = useQuery({
     queryKey: ['userProfile'],
@@ -144,9 +152,17 @@ export function CVEditor({ id }: CVEditorProps) {
 
   const methods = useForm<CV>({
     defaultValues: { ...defaultValues, templateId: templateFromQuery || defaultValues.templateId } as any,
+    mode: 'onChange',
   });
 
-  const { register, watch, handleSubmit, reset, setValue } = methods;
+  const {
+    register,
+    watch,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = methods;
 
   // Watch form values for live preview
   const formData = watch();
@@ -255,6 +271,35 @@ export function CVEditor({ id }: CVEditorProps) {
     saveMutation.mutate(data);
   };
 
+  const onInvalid = (formErrors: typeof errors) => {
+    const firstErrorField = Object.keys(formErrors)[0];
+    if (!firstErrorField) return;
+
+    const sectionMap: Record<string, string> = {
+      personalInfo: 'personal-info',
+      experiences: 'experience',
+      educations: 'education',
+      skills: 'skills',
+      projects: 'projects',
+      certifications: 'certifications',
+      languages: 'languages',
+    };
+
+    const section = sectionMap[firstErrorField];
+    if (section && !expandedItems.includes(section)) {
+      setExpandedItems((prev) => [...prev, section]);
+    }
+
+    // Delay to allow accordion to open before scrolling
+    setTimeout(() => {
+      const firstErrorElement = document.querySelector('[aria-invalid="true"]');
+      if (firstErrorElement) {
+        firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        (firstErrorElement as HTMLElement).focus();
+      }
+    }, 100);
+  };
+
   const handleDownloadPDF = async () => {
     if (!cvRef.current) return;
 
@@ -333,7 +378,7 @@ export function CVEditor({ id }: CVEditorProps) {
 
             <Button
               type='button'
-              onClick={handleSubmit(onSave)}
+              onClick={handleSubmit(onSave, onInvalid)}
               variant='outline'
               disabled={saveMutation.isPending}
               className='border-border bg-card rounded-xl shadow-none'>
@@ -355,9 +400,14 @@ export function CVEditor({ id }: CVEditorProps) {
             {/* Metadata Card */}
             <div className='border-border bg-card rounded-2xl border p-6 shadow-sm'>
               <div className='grid gap-4 md:grid-cols-2'>
-                <div className='space-y-2 md:col-span-2'>
-                  <FormLabel>CV Title</FormLabel>
-                  <Input {...register('cvTitle')} placeholder='Web Developer Fresher CV' className={inputClassName} />
+                <div className='md:col-span-2'>
+                  <FormField label={validationMessages.cvTitle} error={errors.cvTitle?.message}>
+                    <Input
+                      {...register('cvTitle', { required: validationMessages.required(validationMessages.cvTitle) })}
+                      placeholder='Web Developer Fresher CV'
+                      className={inputClassName}
+                    />
+                  </FormField>
                 </div>
 
                 <div className='space-y-2'>
@@ -386,7 +436,8 @@ export function CVEditor({ id }: CVEditorProps) {
             {/* Sections Accordion */}
             <Accordion
               type='multiple'
-              defaultValue={['personal-info', 'experience', 'education', 'skills']}
+              value={expandedItems}
+              onValueChange={setExpandedItems}
               className='space-y-4'>
               <AccordionItem value='personal-info' className='border-border bg-card rounded-2xl border px-6 shadow-sm'>
                 <AccordionTrigger className='text-foreground py-5 font-semibold hover:no-underline'>
