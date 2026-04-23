@@ -45,7 +45,11 @@ export const AutoResizeTextarea = forwardRef<HTMLTextAreaElement, AutoResizeText
             ref.current = node;
           }
         }}
-        className={cn('resize-none overflow-hidden transition-[height] duration-100', className)}
+        className={cn(
+          'resize-none overflow-hidden transition-[height] duration-100',
+          'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
+          className
+        )}
       />
     );
   },

@@ -3,13 +3,18 @@ import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { AppDatePicker } from '@/components/app-datepicker';
 import { Input } from '@/components/ui/input';
 import type { CV } from '@/services/types';
-import { EntryCard, FormLabel, SectionToolbar } from './shared';
+import { EntryCard, FormField, SectionToolbar } from './shared';
+import { validationMessages } from './shared/validation-messages';
 
 const inputClassName =
   'border-border bg-muted text-foreground placeholder:text-muted-foreground h-12 rounded-xl border shadow-none';
 
 export function CertificationSection() {
-  const { register, control } = useFormContext<CV>();
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext<CV>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'certifications',
@@ -31,22 +36,25 @@ export function CertificationSection() {
             onRemove={() => remove(index)}
             canRemove={fields.length > 1}>
             <div className='grid gap-4 md:grid-cols-2'>
-              <div className='space-y-2'>
-                <FormLabel>Name</FormLabel>
+              <FormField label={validationMessages.name} error={errors.certifications?.[index]?.name?.message}>
                 <Input
-                  {...register(`certifications.${index}.name`)}
+                  {...register(`certifications.${index}.name`, { required: validationMessages.required(validationMessages.name) })}
                   placeholder='Front-End Developer'
                   className={inputClassName}
                 />
-              </div>
+              </FormField>
 
-              <div className='space-y-2'>
-                <FormLabel>Issuer</FormLabel>
-                <Input {...register(`certifications.${index}.issuer`)} placeholder='Coursera' className={inputClassName} />
-              </div>
+              <FormField label={validationMessages.issuer} error={errors.certifications?.[index]?.issuer?.message}>
+                <Input
+                  {...register(`certifications.${index}.issuer`, {
+                    required: validationMessages.required(validationMessages.issuer),
+                  })}
+                  placeholder='Coursera'
+                  className={inputClassName}
+                />
+              </FormField>
 
-              <div className='space-y-2'>
-                <FormLabel>Issue Date</FormLabel>
+              <FormField label={validationMessages.issueDate} error={errors.certifications?.[index]?.issueDate?.message}>
                 <Controller
                   control={control}
                   name={`certifications.${index}.issueDate`}
@@ -54,10 +62,9 @@ export function CertificationSection() {
                     <AppDatePicker value={field.value} onChange={field.onChange} placeholder='Select issue date' />
                   )}
                 />
-              </div>
+              </FormField>
 
-              <div className='space-y-2'>
-                <FormLabel>Expiry Date</FormLabel>
+              <FormField label='Expiry Date' error={errors.certifications?.[index]?.expiryDate?.message}>
                 <Controller
                   control={control}
                   name={`certifications.${index}.expiryDate`}
@@ -65,11 +72,12 @@ export function CertificationSection() {
                     <AppDatePicker value={field.value} onChange={field.onChange} placeholder='Select expiry date' />
                   )}
                 />
-              </div>
+              </FormField>
 
-              <div className='space-y-2 md:col-span-2'>
-                <FormLabel>Certificate URL</FormLabel>
-                <Input {...register(`certifications.${index}.url`)} placeholder='https://...' className={inputClassName} />
+              <div className='md:col-span-2'>
+                <FormField label='Certificate URL' error={errors.certifications?.[index]?.url?.message}>
+                  <Input {...register(`certifications.${index}.url`)} placeholder='https://...' className={inputClassName} />
+                </FormField>
               </div>
             </div>
           </EntryCard>

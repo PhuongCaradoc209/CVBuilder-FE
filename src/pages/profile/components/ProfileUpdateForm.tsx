@@ -1,15 +1,14 @@
-import { useEffect } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import InputField from '@/components/common/inputField';
+import { Button } from '@/components/ui/button';
+import { FieldLabel } from '@/components/ui/field';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 import { userService } from '@/services/user.service';
 import { formatDateForInput } from '@/utils/date';
-import { Button } from '@/components/ui/button';
-import InputField from '@/components/common/inputField';
-import { Separator } from '@/components/ui/separator';
-import { toast } from 'sonner';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { FieldLabel } from '@/components/ui/field';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, Trash2 } from 'lucide-react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 interface ProfileUpdateFormProps {
   data: any;
@@ -28,30 +27,44 @@ export function ProfileUpdateForm({ data, onSuccess }: ProfileUpdateFormProps) {
       birthday: formatDateForInput(data.birthday),
       gender: data.gender !== 'Not provided' ? data.gender : '',
       website: data.website !== 'Not provided' ? data.website : '',
-      experiences: data.experiences?.length > 0 
-        ? data.experiences.map((exp: any) => ({ ...exp, startDate: formatDateForInput(exp.startDate), endDate: formatDateForInput(exp.endDate) }))
-        : [{ position: '', companyName: '', startDate: '', endDate: '' }],
-      educations: data.educations?.length > 0 
-        ? data.educations.map((edu: any) => ({ 
-            ...edu, 
-            startDate: formatDateForInput(edu.startDate), 
-            endDate: formatDateForInput(edu.endDate) 
-          }))
-        : [{ schoolName: '', major: '', startDate: '', endDate: '' }],
-    }
+      experiences:
+        data.experiences?.length > 0
+          ? data.experiences.map((exp: any) => ({
+              ...exp,
+              startDate: formatDateForInput(exp.startDate),
+              endDate: formatDateForInput(exp.endDate),
+            }))
+          : [{ position: '', companyName: '', startDate: '', endDate: '' }],
+      educations:
+        data.educations?.length > 0
+          ? data.educations.map((edu: any) => ({
+              ...edu,
+              startDate: formatDateForInput(edu.startDate),
+              endDate: formatDateForInput(edu.endDate),
+            }))
+          : [{ schoolName: '', major: '', startDate: '', endDate: '' }],
+    },
   });
 
   const { register, control, handleSubmit, setValue, watch } = methods;
   const genderValue = watch('gender');
 
-  const { fields: expFields, append: appendExp, remove: removeExp } = useFieldArray({
+  const {
+    fields: expFields,
+    append: appendExp,
+    remove: removeExp,
+  } = useFieldArray({
     control,
-    name: 'experiences'
+    name: 'experiences',
   });
 
-  const { fields: eduFields, append: appendEdu, remove: removeEdu } = useFieldArray({
+  const {
+    fields: eduFields,
+    append: appendEdu,
+    remove: removeEdu,
+  } = useFieldArray({
     control,
-    name: 'educations'
+    name: 'educations',
   });
 
   const updateProfileMutation = useMutation({
@@ -180,9 +193,7 @@ export function ProfileUpdateForm({ data, onSuccess }: ProfileUpdateFormProps) {
         />
         <div>
           <FieldLabel className='text-black/85'>Gender</FieldLabel>
-          <Select
-            value={genderValue}
-            onValueChange={(value) => setValue('gender', value)}>
+          <Select value={genderValue} onValueChange={(value) => setValue('gender', value)}>
             <SelectTrigger className='mt-3 w-full'>
               <SelectValue placeholder='Select gender' />
             </SelectTrigger>
