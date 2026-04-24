@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 
 import type { Education, Experience, Info, Skill } from '@/components/types/type';
 import { formatDate } from '@/lib/utils';
+import { TemplateAvatar } from './shared/TemplateAvatar';
 
 export interface ClassicProfessionalTemplateProps {
   info: Info;
@@ -35,20 +36,6 @@ function DateRange({ startDate, endDate }: { startDate?: string; endDate?: strin
   return <div className='text-muted-foreground w-full shrink-0 text-sm font-semibold md:w-36'>{value}</div>;
 }
 
-function AvatarFallback({ fullName }: { fullName: string }) {
-  const initials = fullName
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join('');
-
-  return (
-    <div className='border-background/25 bg-background/10 text-background flex h-28 w-28 shrink-0 items-center justify-center rounded-full border-[5px] text-2xl font-bold'>
-      {initials || 'CV'}
-    </div>
-  );
-}
 
 export default function ClassicProfessionalTemplate({
   info,
@@ -68,15 +55,12 @@ export default function ClassicProfessionalTemplate({
       className={['bg-card mx-auto aspect-3/4 w-full max-w-5xl overflow-hidden shadow-lg', className].filter(Boolean).join(' ')}>
       <header className='bg-foreground text-background px-8 py-10 sm:px-12'>
         <div className='flex flex-col gap-6 md:flex-row md:items-center'>
-          {avatarUrl ? (
-            <img
-              src={avatarUrl}
-              alt={info.fullName}
-              className='border-background/25 h-28 w-28 shrink-0 rounded-full border-[5px] object-cover'
-            />
-          ) : (
-            <AvatarFallback fullName={info.fullName} />
-          )}
+          <TemplateAvatar
+            src={avatarUrl}
+            fullName={info.fullName}
+            className='border-background/25 h-28 w-28 shrink-0 rounded-full border-[5px] object-cover'
+            fallbackClassName='border-background/25 bg-background/10 text-background flex h-28 w-28 shrink-0 items-center justify-center rounded-full border-[5px] text-2xl font-bold'
+          />
 
           <div className='min-w-0 flex-1'>
             <h1 className='text-4xl font-extrabold tracking-wide sm:text-5xl'>{info.fullName}</h1>
@@ -102,7 +86,7 @@ export default function ClassicProfessionalTemplate({
         {hasSummary && (
           <section>
             <SectionHeading>About Me</SectionHeading>
-            <p className='text-muted-foreground text-lg leading-8'>{info.summary}</p>
+            <p className='text-muted-foreground text-lg leading-8 whitespace-pre-line'>{info.summary}</p>
           </section>
         )}
 
@@ -123,7 +107,7 @@ export default function ClassicProfessionalTemplate({
                     <p className='text-foreground/85 mt-1 text-lg'>{education.major}</p>
 
                     {education.description && (
-                      <p className='text-muted-foreground mt-3 text-base leading-7'>{education.description}</p>
+                      <p className='text-muted-foreground mt-3 text-base leading-7 whitespace-pre-line'>{education.description}</p>
                     )}
                   </div>
                 </div>
@@ -149,7 +133,7 @@ export default function ClassicProfessionalTemplate({
                     <p className='text-foreground/85 mt-1 text-lg'>{experience.companyName}</p>
 
                     {experience.description && (
-                      <p className='text-muted-foreground mt-3 text-base leading-7'>{experience.description}</p>
+                      <p className='text-muted-foreground mt-3 text-base leading-7 whitespace-pre-line'>{experience.description}</p>
                     )}
                   </div>
                 </div>

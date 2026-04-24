@@ -43,6 +43,7 @@ const defaultValues: Partial<CV> = {
     fullName: '',
     email: '',
     socialLinks: [{ platform: '', url: '' }],
+    imgUrl: '',
   },
   experiences: [],
   educations: [],
@@ -146,7 +147,7 @@ export function CVEditor({ id }: CVEditorProps) {
   const { data: profileData } = useQuery({
     queryKey: ['userProfile'],
     queryFn: userService.getProfile,
-    enabled: !id,
+    enabled: true,
     select: (res: any) => res?.user,
   });
 
@@ -172,7 +173,25 @@ export function CVEditor({ id }: CVEditorProps) {
     if (id) {
       cvService.getById(id).then((res) => {
         if (res.success && res.data) {
-          reset(res.data);
+          const sanitized = {
+            ...res.data,
+            personalInfo: {
+              ...res.data.personalInfo,
+              fullName: res.data.personalInfo?.fullName || '',
+              email: res.data.personalInfo?.email || '',
+              phone: res.data.personalInfo?.phone === 'Not provided' ? '' : res.data.personalInfo?.phone || '',
+              jobTitle: res.data.personalInfo?.jobTitle === 'Not provided' ? '' : res.data.personalInfo?.jobTitle || '',
+              address: res.data.personalInfo?.address === 'Not provided' ? '' : res.data.personalInfo?.address || '',
+              summary: res.data.personalInfo?.summary === 'Not provided' ? '' : res.data.personalInfo?.summary || '',
+              imgUrl:
+                res.data.personalInfo?.imgUrl && res.data.personalInfo?.imgUrl !== 'Not provided'
+                  ? res.data.personalInfo.imgUrl
+                  : (profileData?.avatarUrl && profileData?.avatarUrl !== 'Not provided'
+                    ? profileData.avatarUrl
+                    : (profileData?.imgUrl && profileData?.imgUrl !== 'Not provided' ? profileData.imgUrl : '')),
+            },
+          };
+          reset(sanitized);
         }
       });
     } else if (profileData) {
@@ -188,7 +207,9 @@ export function CVEditor({ id }: CVEditorProps) {
           jobTitle: profileData.jobTitle !== 'Not provided' ? profileData.jobTitle : '',
           address: profileData.address !== 'Not provided' ? profileData.address : '',
           summary: profileData.summary !== 'Not provided' ? profileData.summary : '',
-          imgUrl: profileData.avatarUrl || profileData.imgUrl || '',
+          imgUrl: (profileData.avatarUrl && profileData.avatarUrl !== 'Not provided') 
+            ? profileData.avatarUrl 
+            : (profileData.imgUrl && profileData.imgUrl !== 'Not provided' ? profileData.imgUrl : ''),
           socialLinks: profileData.website
             ? [{ platform: 'Website', url: profileData.website }]
             : defaultValues.personalInfo?.socialLinks,

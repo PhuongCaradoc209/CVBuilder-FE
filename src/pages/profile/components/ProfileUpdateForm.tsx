@@ -4,7 +4,7 @@ import { FieldLabel } from '@/components/ui/field';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { userService } from '@/services/user.service';
-import { formatDateForInput } from '@/utils/date';
+import { formatDateForAPI, formatDateForInput } from '@/utils/date';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, Trash2 } from 'lucide-react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -76,7 +76,7 @@ export function ProfileUpdateForm({ data, onSuccess }: ProfileUpdateFormProps) {
         jobTitle: payload.jobTitle,
         email: payload.email,
         phone: payload.phone,
-        birthday: formatDateForInput(payload.birthday),
+        birthday: formatDateForAPI(payload.birthday),
         gender: payload.gender,
         website: payload.website,
       };
@@ -85,8 +85,8 @@ export function ProfileUpdateForm({ data, onSuccess }: ProfileUpdateFormProps) {
       payload.experiences.forEach((exp: any) => {
         const formattedExp = {
           ...exp,
-          startDate: formatDateForInput(exp.startDate),
-          endDate: formatDateForInput(exp.endDate),
+          startDate: formatDateForAPI(exp.startDate),
+          endDate: formatDateForAPI(exp.endDate),
         };
 
         if (!formattedExp._id || String(formattedExp._id).startsWith('temp_')) {
@@ -102,8 +102,8 @@ export function ProfileUpdateForm({ data, onSuccess }: ProfileUpdateFormProps) {
       payload.educations.forEach((edu: any) => {
         const formattedEdu = {
           ...edu,
-          startDate: formatDateForInput(edu.startDate),
-          endDate: formatDateForInput(edu.endDate),
+          startDate: formatDateForAPI(edu.startDate),
+          endDate: formatDateForAPI(edu.endDate),
         };
 
         if (!formattedEdu._id || String(formattedEdu._id).startsWith('temp_')) {

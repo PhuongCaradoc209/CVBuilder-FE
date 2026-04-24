@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 
 import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
 import { formatDate } from '@/lib/utils';
+import { TemplateAvatar } from './shared/TemplateAvatar';
 
 export interface EditorialCreativeTemplateProps {
   info: Info;
@@ -34,20 +35,6 @@ function ContactRow({ label, value }: { label: string; value?: string }) {
   );
 }
 
-function ImageFallback({ fullName }: { fullName: string }) {
-  const initials = fullName
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join('');
-
-  return (
-    <div className='bg-muted text-foreground/55 flex aspect-4/5 w-full items-center justify-center text-3xl font-bold tracking-[0.25em] uppercase'>
-      {initials || 'CV'}
-    </div>
-  );
-}
 
 function splitName(fullName: string) {
   const parts = fullName.trim().split(/\s+/).filter(Boolean);
@@ -119,7 +106,7 @@ export default function EditorialCreativeTemplate({
             {hasSummary && (
               <section>
                 <SectionLabel>Profile</SectionLabel>
-                <p className='text-muted-foreground text-lg leading-8'>{info.summary}</p>
+                <p className='text-muted-foreground text-lg leading-8 whitespace-pre-line'>{info.summary}</p>
               </section>
             )}
 
@@ -144,7 +131,7 @@ export default function EditorialCreativeTemplate({
                       </div>
 
                       {experience.description && (
-                        <p className='text-muted-foreground mt-3 text-base leading-7'>{experience.description}</p>
+                        <p className='text-muted-foreground mt-3 text-base leading-7 whitespace-pre-line'>{experience.description}</p>
                       )}
                     </div>
                   ))}
@@ -173,7 +160,7 @@ export default function EditorialCreativeTemplate({
                       </div>
 
                       {education.description && (
-                        <p className='text-muted-foreground mt-3 text-base leading-7'>{education.description}</p>
+                        <p className='text-muted-foreground mt-3 text-base leading-7 whitespace-pre-line'>{education.description}</p>
                       )}
                     </div>
                   ))}
@@ -207,11 +194,12 @@ export default function EditorialCreativeTemplate({
 
         <aside className='space-y-8'>
           <div className='bg-card overflow-hidden rounded-sm shadow-sm'>
-            {avatarUrl ? (
-              <img src={avatarUrl} alt={info.fullName} className='aspect-4/5 w-full object-cover' />
-            ) : (
-              <ImageFallback fullName={info.fullName} />
-            )}
+            <TemplateAvatar
+              src={avatarUrl}
+              fullName={info.fullName}
+              className='aspect-4/5 w-full object-cover'
+              fallbackClassName='bg-muted text-foreground/55 flex aspect-4/5 w-full items-center justify-center text-3xl font-bold tracking-[0.25em] uppercase'
+            />
           </div>
 
           {hasSkills && (
