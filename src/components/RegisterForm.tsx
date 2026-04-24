@@ -28,7 +28,7 @@ export default function RegisterForm() {
     },
     onError: (error: any) => {
       console.log(error);
-      toast.error(error.response?.data?.message || 'Đăng ký thất bại. Vui lòng kiểm tra lại!');
+      toast.error(error.response?.data?.errors[0]?.message ||error.response?.data?.message ||  'Fail to register');
     },
   });
 
@@ -58,7 +58,7 @@ export default function RegisterForm() {
 
       <form onSubmit={handleRegister} className='space-y-6'>
         {/* SOCIAL LOGIN */}
-        <div className='flex gap-4'>
+        {/* <div className='flex gap-4'>
           <Button type='button' variant='outline' className='flex flex-1 items-center justify-center gap-2'>
             <img src={googleIcon} alt='google' className='h-4 w-4' />
             Google
@@ -68,16 +68,16 @@ export default function RegisterForm() {
             <img src={githubIcon} alt='github' className='h-4 w-4' />
             GitHub
           </Button>
-        </div>
+        </div> */}
 
         {/* DIVIDER */}
-        <div className='flex items-center'>
+        {/* <div className='flex items-center'>
           <div className='flex-1 border-t'></div>
 
           <span className='px-3 text-xs text-gray-400'>OR REGISTER WITH EMAIL</span>
 
           <div className='flex-1 border-t'></div>
-        </div>
+        </div> */}
 
         {/* FULL NAME */}
         <div className='space-y-2'>
