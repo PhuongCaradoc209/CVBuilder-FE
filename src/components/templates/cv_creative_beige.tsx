@@ -1,5 +1,6 @@
 import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
 import { formatDate } from '@/lib/utils';
+import { TemplateAvatar } from './shared/TemplateAvatar';
 import type { ReactNode } from 'react';
 
 export interface EditorialCreativeTemplateProps {
@@ -21,20 +22,6 @@ function SectionLabel({ children }: { children: ReactNode }) {
   );
 }
 
-function ImageFallback({ fullName }: { fullName: string }) {
-  const initials = fullName
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((p) => p[0]?.toUpperCase())
-    .join('');
-
-  return (
-    <div className='flex aspect-[4/5] w-full items-center justify-center bg-[#D8C7B7] text-[3rem] font-bold text-[#6B5B53]'>
-      {initials || 'CV'}
-    </div>
-  );
-}
 
 function splitName(fullName: string) {
   const parts = fullName.trim().split(/\s+/).filter(Boolean);
@@ -62,11 +49,12 @@ export default function CVCreativeBeigeTemplate({
       <div className='grid grid-cols-[1fr_2fr] items-start gap-12'>
         {/* IMAGE */}
         <div>
-          {info.imgUrl ? (
-            <img src={info.imgUrl} alt={info.fullName} className='aspect-[4/5] w-full border-2 border-[#CBB8A8] object-cover' />
-          ) : (
-            <ImageFallback fullName={info.fullName} />
-          )}
+          <TemplateAvatar
+            src={info.imgUrl}
+            fullName={info.fullName}
+            className='aspect-[4/5] w-full border-2 border-[#CBB8A8] object-cover'
+            fallbackClassName='aspect-[4/5] w-full border-2 border-[#CBB8A8] bg-[#D8C7B7] text-[3rem] font-bold text-[#6B5B53]'
+          />
         </div>
 
         {/* RIGHT HEADER */}
@@ -88,7 +76,7 @@ export default function CVCreativeBeigeTemplate({
           <p className='mt-2 text-[1rem] font-semibold tracking-[0.3em] text-[#6B5B53] uppercase'>{info.jobTitle}</p>
 
           {/* SUMMARY */}
-          <p className='mt-5 text-[1rem] leading-relaxed text-[#4A3F3A]'>{info.summary}</p>
+          <p className='mt-5 text-[1rem] leading-relaxed text-[#4A3F3A] whitespace-pre-line'>{info.summary}</p>
 
           {/* CONTACT */}
           <div className='mt-8 grid grid-cols-3 gap-10 text-[0.95rem]'>

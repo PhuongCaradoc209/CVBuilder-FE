@@ -51,7 +51,7 @@ export default function ATSStandardTemplate({
           <Divider />
           <div>
             <SectionHeader title='Business Management & Analysis' />
-            <p className='text-justify text-lg'>{info.summary}</p>
+            <p className='text-justify text-lg whitespace-pre-line'>{info.summary}</p>
           </div>
         </>
       )}
@@ -89,7 +89,7 @@ export default function ATSStandardTemplate({
                     </span>
                   </div>
                   <div className='mb-1 font-bold'>{exp.position}</div>
-                  <p className='text-justify'>{exp.description}</p>
+                  <p className='text-justify whitespace-pre-line'>{exp.description}</p>
                 </div>
               ))}
             </div>

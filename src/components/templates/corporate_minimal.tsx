@@ -138,7 +138,7 @@ export default function CorporateMinimalTemplate({
           {hasSummary && (
             <section>
               <SectionHeading>Profile Summary</SectionHeading>
-              <p className='text-[0.95rem] leading-relaxed text-[#555]'>{info.summary}</p>
+              <p className='text-[0.95rem] leading-relaxed text-[#555] whitespace-pre-line'>{info.summary}</p>
             </section>
           )}
 

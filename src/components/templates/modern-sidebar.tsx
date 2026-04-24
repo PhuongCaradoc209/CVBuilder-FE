@@ -1,5 +1,6 @@
 import type { Certificate, Education, Experience, Info, Language, Skill } from '@/components/types/type';
 import { formatDate } from '@/lib/utils';
+import { TemplateAvatar } from './shared/TemplateAvatar';
 
 export interface ModernSidebarTemplateProps {
   info: Info;
@@ -28,22 +29,19 @@ export default function ModernSidebarTemplate({
       <div className='flex w-1/3 flex-col gap-5.5 bg-gray-100 p-7'>
         {/* Profile Image */}
         <div className='mb-8 flex justify-center pt-14'>
-          <div className='h-48 w-48 overflow-hidden rounded-full border-white shadow-sm'>
-            {avatarUrl || info.imgUrl ? (
-              <img src={avatarUrl || info.imgUrl} alt='Profile' className='h-full w-full object-cover' />
-            ) : (
-              <div className='flex h-full w-full items-center justify-center bg-gray-300 text-3xl font-bold'>
-                {info.fullName.charAt(0)}
-              </div>
-            )}
-          </div>
+          <TemplateAvatar
+            src={avatarUrl || info.imgUrl}
+            fullName={info.fullName}
+            className='h-48 w-48 overflow-hidden rounded-full border-white object-cover shadow-sm'
+            fallbackClassName='h-48 w-48 overflow-hidden rounded-full border-white shadow-sm text-3xl'
+          />
         </div>
 
         {/* About Me */}
         {info.summary && (
           <section>
             <h2 className='mb-4 border-b-2 border-gray-400 py-2 text-2xl font-bold'>About Me</h2>
-            <p className='text-justify text-base text-gray-700'>{info.summary}</p>
+            <p className='text-justify text-base text-gray-700 whitespace-pre-line'>{info.summary}</p>
           </section>
         )}
 
@@ -132,7 +130,7 @@ export default function ModernSidebarTemplate({
                   </span>
                 </div>
                 <p className='text-md mb-1.5 font-bold text-black/85'>{exp.companyName}</p>
-                {exp.description && <p className='text-base text-gray-700'>{exp.description}</p>}
+                {exp.description && <p className='text-base text-gray-700 whitespace-pre-line'>{exp.description}</p>}
               </div>
             ))}
           </section>
@@ -152,7 +150,7 @@ export default function ModernSidebarTemplate({
                   </span>
                 </div>
                 <p className='text-md mb-1.5 font-bold text-black/85'>{edu.schoolName}</p>
-                {edu.description && <p className='text-base text-gray-700'>{edu.description}</p>}
+                {edu.description && <p className='text-base text-gray-700 whitespace-pre-line'>{edu.description}</p>}
               </div>
             ))}
           </section>
